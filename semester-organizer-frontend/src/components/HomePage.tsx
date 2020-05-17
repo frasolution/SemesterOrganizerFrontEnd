@@ -3,8 +3,9 @@ import styled from "styled-components";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Grid, Button, Typography } from "@material-ui/core";
 
-import { HeaderBar } from "./HeaderBar";
 import heroImg from "../assets/hero.jpg";
+import { HeaderBar } from "./HeaderBar";
+import { SignUpDialog } from "./dialogs/SignUpDialog";
 
 interface StyledProps {
   img: any;
@@ -62,9 +63,7 @@ export function HomePage() {
         <Grid item xs={12}>
           <Grid container direction="row" alignItems="center">
             <Grid item>
-              <Button variant="contained" color="primary" className={classes.button}>
-                Sign Up
-              </Button>
+              <SignUpDialog className={classes.button} />
             </Grid>
             <Grid item>
               <Button variant="contained" color="primary" className={classes.button}>
