@@ -4,7 +4,6 @@
     "plugin:import/errors",
     "plugin:react/recommended",
     "plugin:jsx-a11y/recommended",
-    "plugin:cypress/recommended",
     "prettier",
     "prettier/react"
   ],
@@ -33,6 +32,11 @@
   "settings": {
     "react": {
       "version": "latest"
+    },
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
     }
   }
 }
