@@ -1,6 +1,7 @@
 import React, { useState, Fragment } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
+import MuiAlert from "@material-ui/lab/Alert";
 import {
   Button,
   Dialog,
@@ -8,8 +9,10 @@ import {
   DialogContent,
   TextField,
   DialogActions,
+  Snackbar,
 } from "@material-ui/core";
 
+import { httpPost } from "../../utils/http-client";
 import { SignUpFormValues } from "../../types/types";
 
 type SignUpDialogProps = {
@@ -51,6 +54,7 @@ const validationSchema = Yup.object({
 
 export function SignUpDialog(props: SignUpDialogProps) {
   const [isOpen, setOpen] = useState(false);
+  const [isSuccessOpen, setSuccessOpen] = useState(false);
 
   function openDialog() {
     setOpen(true);
@@ -60,8 +64,30 @@ export function SignUpDialog(props: SignUpDialogProps) {
     setOpen(false);
   }
 
-  function submit(values: SignUpFormValues) {
-    console.log(values);
+  function openSuccessSnackbar() {
+    setSuccessOpen(true);
+  }
+
+  function handleSnackbarClose(event: React.SyntheticEvent | React.MouseEvent, reason?: string) {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSuccessOpen(false);
+  }
+
+  async function submit(values: SignUpFormValues) {
+    try {
+      const response = await httpPost("/api/auth/signup", values);
+      closeDialog();
+      if (response.ok) {
+        openSuccessSnackbar();
+      } else {
+        alert("You can't sign up right now.");
+      }
+    } catch (error) {
+      alert("Internal Server Error");
+      console.log(error);
+    }
   }
 
   return (
@@ -180,6 +206,11 @@ export function SignUpDialog(props: SignUpDialogProps) {
           );
         }}
       </Formik>
+      <Snackbar open={isSuccessOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
+        <MuiAlert severity="success" elevation={6} variant="filled" onClose={handleSnackbarClose}>
+          You can now login with your credentials!
+        </MuiAlert>
+      </Snackbar>
     </Fragment>
   );
 }
