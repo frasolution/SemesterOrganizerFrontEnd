@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from "react";
-import { Formik } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import {
   Button,
@@ -24,6 +24,8 @@ const initialValues: SignUpFormValues = {
   confirmPassword: "",
 };
 
+const passwordRegex = /((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
+
 const validationSchema = Yup.object({
   firstname: Yup.string()
     .required("First name is required")
@@ -41,7 +43,7 @@ const validationSchema = Yup.object({
     .required("Password is required")
     .min(8, "Needs more than 8 characters")
     .max(20, "Must be 30 characters or less")
-    .matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, "Password is too weak"),
+    .matches(passwordRegex, "Password is too weak"),
   confirmPassword: Yup.string()
     .required("Confirm needs to be confirmed")
     .oneOf([Yup.ref("password")], "Password does not match"),
@@ -70,7 +72,7 @@ export function SignUpDialog(props: SignUpDialogProps) {
         onSubmit={(values: SignUpFormValues) => submit(values)}
       >
         {(formikProps) => {
-          const { values, errors, handleSubmit, handleChange, isValid } = formikProps;
+          const { values, errors, isValid, touched, handleChange, handleBlur } = formikProps;
           return (
             <Fragment>
               <Button
@@ -90,13 +92,14 @@ export function SignUpDialog(props: SignUpDialogProps) {
               >
                 <DialogTitle id="signup-dialog-title">Sign Up</DialogTitle>
                 <DialogContent>
-                  <form onSubmit={handleSubmit}>
+                  <Form>
                     <TextField
                       required
-                      helperText={errors.firstname}
-                      error={Boolean(errors.firstname)}
+                      helperText={errors.firstname && touched.firstname && errors.firstname}
+                      error={Boolean(errors.firstname && touched.firstname)}
                       value={values.firstname}
                       onChange={handleChange}
+                      onBlur={handleBlur}
                       name="firstname"
                       label="First Name"
                       type="text"
@@ -106,10 +109,11 @@ export function SignUpDialog(props: SignUpDialogProps) {
                     />
                     <TextField
                       required
-                      helperText={errors.lastname}
-                      error={Boolean(errors.lastname)}
+                      helperText={errors.lastname && touched.lastname && errors.lastname}
+                      error={Boolean(errors.lastname && touched.lastname)}
                       value={values.lastname}
                       onChange={handleChange}
+                      onBlur={handleBlur}
                       name="lastname"
                       label="Last Name"
                       type="text"
@@ -119,10 +123,11 @@ export function SignUpDialog(props: SignUpDialogProps) {
                     />
                     <TextField
                       required
-                      helperText={errors.username}
-                      error={Boolean(errors.username)}
+                      helperText={errors.username && touched.username && errors.username}
+                      error={Boolean(errors.username && touched.username)}
                       value={values.username}
                       onChange={handleChange}
+                      onBlur={handleBlur}
                       name="username"
                       label="Username"
                       type="text"
@@ -132,10 +137,11 @@ export function SignUpDialog(props: SignUpDialogProps) {
                     />
                     <TextField
                       required
-                      helperText={errors.password}
-                      error={Boolean(errors.password)}
+                      helperText={errors.password && touched.password && errors.password}
+                      error={Boolean(errors.password && touched.password)}
                       value={values.password}
                       onChange={handleChange}
+                      onBlur={handleBlur}
                       name="password"
                       label="Password"
                       type="password"
@@ -145,10 +151,13 @@ export function SignUpDialog(props: SignUpDialogProps) {
                     />
                     <TextField
                       required
-                      helperText={errors.confirmPassword}
-                      error={Boolean(errors.confirmPassword)}
+                      helperText={
+                        errors.confirmPassword && touched.confirmPassword && errors.confirmPassword
+                      }
+                      error={Boolean(errors.confirmPassword && touched.confirmPassword)}
                       value={values.confirmPassword}
                       onChange={handleChange}
+                      onBlur={handleBlur}
                       name="confirmPassword"
                       label="Confirm Password"
                       type="password"
@@ -156,15 +165,15 @@ export function SignUpDialog(props: SignUpDialogProps) {
                       autoComplete="off"
                       fullWidth
                     />
-                  </form>
-                  <DialogActions>
-                    <Button onClick={closeDialog} color="secondary">
-                      Cancel
-                    </Button>
-                    <Button type="submit" color="primary" disabled={!isValid}>
-                      Submit
-                    </Button>
-                  </DialogActions>
+                    <DialogActions>
+                      <Button onClick={closeDialog} color="secondary">
+                        Cancel
+                      </Button>
+                      <Button type="submit" color="primary" disabled={!isValid}>
+                        Sign Up
+                      </Button>
+                    </DialogActions>
+                  </Form>
                 </DialogContent>
               </Dialog>
             </Fragment>
