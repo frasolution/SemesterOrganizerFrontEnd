@@ -4,7 +4,6 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Grid, Typography } from "@material-ui/core";
 
 import heroImg from "../../assets/hero.jpg";
-import HeaderBar from "../common/HeaderBar";
 import SignUpDialog from "../dialogs/SignUpDialog";
 import LoginDialog from "../dialogs/LoginDialog";
 
@@ -34,11 +33,12 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
     },
     greeting: {
-      margin: theme.spacing(2),
+      marginBottom: theme.spacing(1),
       color: "white",
     },
-    button: {
-      margin: theme.spacing(2),
+    subtitle: {
+      marginBottom: theme.spacing(1),
+      color: "white",
     },
   })
 );
@@ -48,7 +48,6 @@ export default function HomePage() {
 
   return (
     <Hero img={heroImg}>
-      <HeaderBar title="FRA UAS Semester Organizer" />
       <Grid
         container
         className={classes.root}
@@ -57,17 +56,22 @@ export default function HomePage() {
         alignItems="center"
       >
         <Grid item xs={12}>
-          <Typography variant="h2" className={classes.greeting}>
+          <Typography variant="h1" className={classes.greeting}>
             Welcome
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h5" className={classes.subtitle}>
+            Organize your CS modules of the Frankfurt University of Applied Sciences
           </Typography>
         </Grid>
         <Grid item xs={12}>
           <Grid container direction="row" alignItems="center">
             <Grid item>
-              <SignUpDialog className={classes.button} />
+              <SignUpDialog />
             </Grid>
             <Grid item>
-              <LoginDialog className={classes.button} />
+              <LoginDialog />
             </Grid>
           </Grid>
         </Grid>

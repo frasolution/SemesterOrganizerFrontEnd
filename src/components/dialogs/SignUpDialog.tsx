@@ -1,6 +1,7 @@
 import React, { useState, Fragment } from "react";
 import { Formik, Form } from "formik";
 import MuiAlert from "@material-ui/lab/Alert";
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import {
   Button,
   Dialog,
@@ -9,6 +10,9 @@ import {
   TextField,
   DialogActions,
   Snackbar,
+  Fab,
+  makeStyles,
+  Theme,
 } from "@material-ui/core";
 
 import { SignUpFormValues } from "../../types/types";
@@ -18,13 +22,20 @@ import {
   signUpFormValidationSchema,
 } from "../../utils/form-validation-schemas";
 
-type SignUpDialogProps = {
-  className: string;
-};
+const useStyles = makeStyles((theme: Theme) => ({
+  button: {
+    margin: theme.spacing(1),
+    minWidth: "8rem",
+  },
+  icon: {
+    marginRight: theme.spacing(1),
+  },
+}));
 
-export default function SignUpDialog(props: SignUpDialogProps) {
+export default function SignUpDialog() {
   const [isOpen, setOpen] = useState(false);
   const [isSuccessOpen, setSuccessOpen] = useState(false);
+  const classes = useStyles();
 
   function openDialog() {
     setOpen(true);
@@ -71,14 +82,16 @@ export default function SignUpDialog(props: SignUpDialogProps) {
           const { values, errors, isValid, touched, handleChange, handleBlur } = formikProps;
           return (
             <Fragment>
-              <Button
-                variant="contained"
+              <Fab
+                size="large"
+                variant="extended"
                 color="primary"
-                className={props.className}
+                className={classes.button}
                 onClick={openDialog}
               >
+                <PersonAddIcon className={classes.icon} />
                 Sign Up
-              </Button>
+              </Fab>
               <Dialog
                 fullWidth
                 maxWidth="sm"

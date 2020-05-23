@@ -1,4 +1,6 @@
 import React, { Fragment, useState } from "react";
+import { useHistory } from "react-router-dom";
+import LoginIcon from "@material-ui/icons/ExitToApp";
 import {
   Button,
   Dialog,
@@ -7,6 +9,9 @@ import {
   DialogTitle,
   TextField,
   Typography,
+  Fab,
+  makeStyles,
+  Theme,
 } from "@material-ui/core";
 import { Formik, Form } from "formik";
 
@@ -18,13 +23,21 @@ import {
 import { httpPost } from "../../utils/http-client";
 import { setToken } from "../../utils/jwt";
 
-type LoginDialogProps = {
-  className: string;
-};
+const useStyles = makeStyles((theme: Theme) => ({
+  button: {
+    margin: theme.spacing(1),
+    minWidth: "8rem",
+  },
+  icon: {
+    marginRight: theme.spacing(1),
+  },
+}));
 
-export default function LoginDialog(props: LoginDialogProps) {
+export default function LoginDialog() {
   const [isOpen, setOpen] = useState(false);
   const [isError, setError] = useState(false);
+  const classes = useStyles();
+  let history = useHistory();
 
   function openDialog() {
     setOpen(true);
@@ -41,7 +54,9 @@ export default function LoginDialog(props: LoginDialogProps) {
         const json = await response.json();
         const token = json["token"];
         setToken(token);
-        // TODO: re-route to teams overview page
+        history.push({
+          pathname: "/teams",
+        });
       } else {
         setError(true);
       }
@@ -62,14 +77,16 @@ export default function LoginDialog(props: LoginDialogProps) {
           const { values, errors, isValid, touched, handleChange, handleBlur } = formikProps;
           return (
             <Fragment>
-              <Button
-                variant="contained"
+              <Fab
+                size="large"
+                variant="extended"
                 color="primary"
-                className={props.className}
+                className={classes.button}
                 onClick={openDialog}
               >
+                <LoginIcon className={classes.icon} />
                 Login
-              </Button>
+              </Fab>
               <Dialog
                 fullWidth
                 maxWidth="sm"
