@@ -16,6 +16,7 @@ import {
   loginFormValidationSchema,
 } from "../../utils/form-validation-schemas";
 import { httpPost } from "../../utils/http-client";
+import { setToken } from "../../utils/jwt";
 
 type LoginDialogProps = {
   className: string;
@@ -37,8 +38,9 @@ export default function LoginDialog(props: LoginDialogProps) {
     try {
       const response = await httpPost("/api/auth/signin", values);
       if (response.ok) {
-        console.log(response);
-        // TODO: handle token
+        const json = await response.json();
+        const token = json["token"];
+        setToken(token);
         // TODO: re-route to teams overview page
       } else {
         setError(true);
