@@ -1,6 +1,5 @@
 import React, { useState, Fragment } from "react";
 import { Formik, Form } from "formik";
-import * as Yup from "yup";
 import MuiAlert from "@material-ui/lab/Alert";
 import {
   Button,
@@ -12,47 +11,18 @@ import {
   Snackbar,
 } from "@material-ui/core";
 
-import { httpPost } from "../../utils/http-client";
 import { SignUpFormValues } from "../../types/types";
+import { httpPost } from "../../utils/http-client";
+import {
+  signUpFormInitialValues,
+  signUpFormValidationSchema,
+} from "../../utils/form-validation-schemas";
 
 type SignUpDialogProps = {
   className: string;
 };
 
-const initialValues: SignUpFormValues = {
-  firstname: "",
-  lastname: "",
-  username: "",
-  password: "",
-  confirmPassword: "",
-};
-
-const passwordRegex = /((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
-
-const validationSchema = Yup.object({
-  firstname: Yup.string()
-    .required("First name is required")
-    .min(1, "Needs more than 1 character")
-    .max(30, "Must be 30 characters or less"),
-  lastname: Yup.string()
-    .required("Last name is required")
-    .min(1, "Needs more than 1 character")
-    .max(30, "Must be 30 characters or less"),
-  username: Yup.string()
-    .required("Username is required")
-    .min(4, "Needs more than 4 characters")
-    .max(20, "Must be 20 characters or less"),
-  password: Yup.string()
-    .required("Password is required")
-    .min(8, "Needs more than 8 characters")
-    .max(20, "Must be 30 characters or less")
-    .matches(passwordRegex, "Password is too weak"),
-  confirmPassword: Yup.string()
-    .required("Confirm needs to be confirmed")
-    .oneOf([Yup.ref("password")], "Password does not match"),
-});
-
-export function SignUpDialog(props: SignUpDialogProps) {
+export default function SignUpDialog(props: SignUpDialogProps) {
   const [isOpen, setOpen] = useState(false);
   const [isSuccessOpen, setSuccessOpen] = useState(false);
 
@@ -93,8 +63,8 @@ export function SignUpDialog(props: SignUpDialogProps) {
   return (
     <Fragment>
       <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
+        initialValues={signUpFormInitialValues}
+        validationSchema={signUpFormValidationSchema}
         onSubmit={(values: SignUpFormValues) => submit(values)}
       >
         {(formikProps) => {

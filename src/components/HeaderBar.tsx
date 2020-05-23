@@ -15,7 +15,7 @@ const useStyles = makeStyles(() =>
 
 type HeaderBarProps = { title: string };
 
-export function HeaderBar({ title }: HeaderBarProps) {
+export default function HeaderBar({ title }: HeaderBarProps) {
   const classes = useStyles();
 
   return (

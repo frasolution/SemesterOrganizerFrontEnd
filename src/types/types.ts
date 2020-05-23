@@ -5,3 +5,8 @@ export type SignUpFormValues = {
   password: string;
   confirmPassword: string;
 };
+
+export type LoginFormValues = {
+  username: string;
+  password: string;
+};

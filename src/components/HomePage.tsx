@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { Grid, Button, Typography } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 
 import heroImg from "../assets/hero.jpg";
-import { HeaderBar } from "./HeaderBar";
-import { SignUpDialog } from "./dialogs/SignUpDialog";
+import HeaderBar from "./HeaderBar";
+import SignUpDialog from "./dialogs/SignUpDialog";
+import LoginDialog from "./dialogs/LoginDialog";
 
 interface StyledProps {
   img: any;
@@ -66,9 +67,7 @@ export function HomePage() {
               <SignUpDialog className={classes.button} />
             </Grid>
             <Grid item>
-              <Button variant="contained" color="primary" className={classes.button}>
-                Login
-              </Button>
+              <LoginDialog className={classes.button} />
             </Grid>
           </Grid>
         </Grid>
