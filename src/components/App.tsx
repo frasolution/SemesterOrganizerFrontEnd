@@ -2,8 +2,10 @@ import React from "react";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import { HomePage } from "./HomePage";
-import { ErrorPage } from "./ErrorPage";
+import PrivateRoute from "./common/PrivateRoute";
+import HomePage from "./pages/HomePage";
+import ErrorPage from "./pages/ErrorPage";
+import TeamsPage from "./pages/TeamsPage";
 
 const theme = createMuiTheme({
   palette: {
@@ -27,7 +29,8 @@ function App() {
     <MuiThemeProvider theme={theme}>
       <Router>
         <Switch>
-          <Route path="/" exact component={HomePage} />
+          <Route exact path="/" component={HomePage} />
+          <PrivateRoute exact path="/teams" component={TeamsPage} />
           <Route component={ErrorPage} />
         </Switch>
       </Router>

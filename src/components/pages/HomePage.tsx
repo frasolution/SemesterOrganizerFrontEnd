@@ -3,10 +3,10 @@ import styled from "styled-components";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Grid, Typography } from "@material-ui/core";
 
-import heroImg from "../assets/hero.jpg";
-import HeaderBar from "./HeaderBar";
-import SignUpDialog from "./dialogs/SignUpDialog";
-import LoginDialog from "./dialogs/LoginDialog";
+import heroImg from "../../assets/hero.jpg";
+import HeaderBar from "../common/HeaderBar";
+import SignUpDialog from "../dialogs/SignUpDialog";
+import LoginDialog from "../dialogs/LoginDialog";
 
 interface StyledProps {
   img: any;
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export function HomePage() {
+export default function HomePage() {
   const classes = useStyles();
 
   return (
