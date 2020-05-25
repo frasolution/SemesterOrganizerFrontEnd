@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import GroupIcon from "@material-ui/icons/Group";
-import { makeStyles, Typography, Button } from "@material-ui/core";
+import { makeStyles, Typography, Button, Grid } from "@material-ui/core";
 
 import HeaderBar from "../common/HeaderBar";
-import { FlexContainer } from "../../utils/styled/styled-components";
 import { httpGet } from "../../utils/http-client";
+import CreateTeamDialog from "../dialogs/CreateTeamDialog";
 
 type Team = {
   id: number;
@@ -39,27 +39,31 @@ export default function TeamsPage() {
   }, []);
 
   return (
-    <div>
-      <HeaderBar title="Your Teams" />
-      <FlexContainer>
-        {teams.map((team: Team, index) => (
-          <Button
-            key={index}
-            variant="contained"
-            color="secondary"
-            size="large"
-            className={classes.button}
-            startIcon={<GroupIcon fontSize="large" />}
-          >
-            {team.name}
-          </Button>
-        ))}
-      </FlexContainer>
-      {hasError ? (
-        <Typography variant="body1" color="error" className={classes.error}>
-          Couldn&apos;t fetch your teams.
-        </Typography>
-      ) : null}
-    </div>
+    <Fragment>
+      <HeaderBar title="Your Teams">
+        <CreateTeamDialog />
+      </HeaderBar>
+      <Grid container direction="column">
+        <Grid item>
+          {teams.map((team: Team, index) => (
+            <Button
+              key={index}
+              variant="contained"
+              color="secondary"
+              size="large"
+              className={classes.button}
+              startIcon={<GroupIcon fontSize="large" />}
+            >
+              {team.name}
+            </Button>
+          ))}
+          {hasError ? (
+            <Typography variant="body1" color="error" className={classes.error}>
+              Couldn&apos;t fetch your teams.
+            </Typography>
+          ) : null}
+        </Grid>
+      </Grid>
+    </Fragment>
   );
 }

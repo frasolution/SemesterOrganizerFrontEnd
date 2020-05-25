@@ -22,6 +22,7 @@ import {
 } from "../../utils/form-validation-schemas";
 import { httpPost } from "../../utils/http-client";
 import { setToken } from "../../utils/jwt";
+import { alertWithInternalServerError } from "../../utils/utils";
 
 const useStyles = makeStyles((theme: Theme) => ({
   button: {
@@ -37,7 +38,7 @@ export default function LoginDialog() {
   const [isOpen, setOpen] = useState(false);
   const [isError, setError] = useState(false);
   const classes = useStyles();
-  let history = useHistory();
+  const history = useHistory();
 
   function openDialog() {
     setOpen(true);
@@ -61,8 +62,7 @@ export default function LoginDialog() {
         setError(true);
       }
     } catch (error) {
-      alert("Internal Server Error");
-      console.log(error);
+      alertWithInternalServerError(error);
     }
   }
 

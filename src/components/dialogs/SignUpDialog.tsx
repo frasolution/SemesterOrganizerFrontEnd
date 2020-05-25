@@ -21,6 +21,7 @@ import {
   signUpFormInitialValues,
   signUpFormValidationSchema,
 } from "../../utils/form-validation-schemas";
+import { alertWithInternalServerError } from "../../utils/utils";
 
 const useStyles = makeStyles((theme: Theme) => ({
   button: {
@@ -66,8 +67,7 @@ export default function SignUpDialog() {
         alert("You can't sign up right now.");
       }
     } catch (error) {
-      alert("Internal Server Error");
-      console.log(error);
+      alertWithInternalServerError(error);
     }
   }
 

@@ -15,7 +15,7 @@ const useStyles = makeStyles(() =>
 
 type HeaderBarProps = { title: string };
 
-export default function HeaderBar({ title }: HeaderBarProps) {
+export const HeaderBar: React.FC<HeaderBarProps> = (props) => {
   const classes = useStyles();
 
   return (
@@ -23,10 +23,13 @@ export default function HeaderBar({ title }: HeaderBarProps) {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            {title}
+            {props.title}
           </Typography>
+          {props.children}
         </Toolbar>
       </AppBar>
     </div>
   );
-}
+};
+
+export default HeaderBar;
