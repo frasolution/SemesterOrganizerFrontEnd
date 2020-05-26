@@ -33,7 +33,7 @@ export default function TeamsPage() {
         setTeams(response.data);
       } catch (error) {
         if (axios.isCancel(error)) {
-          setError(false);
+          return;
         } else {
           setError(true);
         }
