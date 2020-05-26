@@ -21,7 +21,6 @@ import {
   signUpFormInitialValues,
   signUpFormValidationSchema,
 } from "../../utils/form-validation-schemas";
-import { alertWithInternalServerError } from "../../utils/utils";
 
 const useStyles = makeStyles((theme: Theme) => ({
   button: {
@@ -61,13 +60,11 @@ export default function SignUpDialog() {
     try {
       const response = await httpPost("/api/auth/signup", values);
       closeDialog();
-      if (response.ok) {
+      if (response.status === 201) {
         openSuccessSnackbar();
-      } else {
-        alert("You can't sign up right now.");
       }
     } catch (error) {
-      alertWithInternalServerError(error);
+      alert("You can't sign up right now.");
     }
   }
 

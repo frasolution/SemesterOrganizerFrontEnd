@@ -1,15 +1,12 @@
 import React, { useState, useEffect, Fragment } from "react";
+import axios from "axios";
 import GroupIcon from "@material-ui/icons/Group";
 import { makeStyles, Typography, Button, Grid } from "@material-ui/core";
 
 import HeaderBar from "../common/HeaderBar";
-import { httpGet } from "../../utils/http-client";
 import CreateTeamDialog from "../dialogs/CreateTeamDialog";
-
-type Team = {
-  id: number;
-  name: string;
-};
+import { getHeaders } from "../../utils/http-client";
+import { Team } from "../../types/types";
 
 const useStyles = makeStyles(() => ({
   button: {
@@ -21,31 +18,41 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default function TeamsPage() {
-  const [teams, setTeams] = useState([]);
+  const [teams, setTeams] = useState([] as Team[]);
   const [hasError, setError] = useState(false);
   const classes = useStyles();
 
-  async function fetchTeams() {
-    const response = await httpGet("/api/teams", true);
-    response
-      .json()
-      .then((res) => setTeams(res))
-      .catch((err) => setError(err));
-  }
-
   useEffect(() => {
-    document.title = "Your Teams | FRA UAS Semester Organizer";
+    const source = axios.CancelToken.source();
+    const fetchTeams = async () => {
+      try {
+        const response = await axios.get("/api/teams", {
+          headers: getHeaders(true),
+          cancelToken: source.token,
+        });
+        setTeams(response.data);
+      } catch (error) {
+        if (axios.isCancel(error)) {
+          setError(false);
+        } else {
+          setError(true);
+        }
+      }
+    };
     fetchTeams();
-  }, []);
+    document.title = "Your Teams | FRA UAS Semester Organizer";
+
+    return () => source.cancel();
+  }, [teams]);
 
   return (
     <Fragment>
       <HeaderBar title="Your Teams">
-        <CreateTeamDialog />
+        <CreateTeamDialog teams={teams} updateTeams={setTeams} />
       </HeaderBar>
       <Grid container direction="column">
         <Grid item>
-          {teams.map((team: Team, index) => (
+          {teams.map((team, index) => (
             <Button
               key={index}
               variant="contained"

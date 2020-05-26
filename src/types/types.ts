@@ -10,3 +10,8 @@ export type LoginFormValues = {
   username: string;
   password: string;
 };
+
+export type Team = {
+  id: number;
+  name: string;
+};

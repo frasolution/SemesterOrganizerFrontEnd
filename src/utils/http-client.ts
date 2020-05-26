@@ -1,3 +1,4 @@
+import axios from "axios";
 import { getToken } from "./jwt";
 
 const headersDefault = {
@@ -9,25 +10,14 @@ const headersWithAuth = {
   Authorization: "Bearer " + getToken(),
 };
 
-function getHeaders(isGuarded: boolean) {
+export function getHeaders(isGuarded: boolean) {
   return isGuarded ? headersWithAuth : headersDefault;
 }
 
 export async function httpPost(url = "", data = {}, isGuarded = false) {
-  const response = await fetch(url, {
-    method: "POST",
-    headers: getHeaders(isGuarded),
-    body: JSON.stringify(data),
-  });
-
-  return response;
+  return await axios.post(url, data, { headers: getHeaders(isGuarded) });
 }
 
 export async function httpGet(url = "", isGuarded = false) {
-  const response = await fetch(url, {
-    method: "GET",
-    headers: getHeaders(isGuarded),
-  });
-
-  return response;
+  return await axios.get(url, { headers: getHeaders(isGuarded) });
 }

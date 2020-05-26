@@ -22,7 +22,6 @@ import {
 } from "../../utils/form-validation-schemas";
 import { httpPost } from "../../utils/http-client";
 import { setToken } from "../../utils/jwt";
-import { alertWithInternalServerError } from "../../utils/utils";
 
 const useStyles = makeStyles((theme: Theme) => ({
   button: {
@@ -51,18 +50,14 @@ export default function LoginDialog() {
   async function submit(values: LoginFormValues) {
     try {
       const response = await httpPost("/api/auth/signin", values);
-      if (response.ok) {
-        const json = await response.json();
-        const token = json["token"];
-        setToken(token);
+      if (response.status === 201) {
+        setToken(response.data.token);
         history.push({
           pathname: "/teams",
         });
-      } else {
-        setError(true);
       }
     } catch (error) {
-      alertWithInternalServerError(error);
+      setError(true);
     }
   }
 

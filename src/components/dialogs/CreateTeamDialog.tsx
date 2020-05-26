@@ -13,10 +13,16 @@ import {
 } from "@material-ui/core";
 import ChipInput from "material-ui-chip-input";
 
-import { validateInput, alertWithInternalServerError } from "../../utils/utils";
+import { validateInput } from "../../utils/utils";
 import { httpPost } from "../../utils/http-client";
+import { Team } from "../../types/types";
 
-export default function CreateTeamDialog() {
+type CreateTeamDialogProps = {
+  teams: Team[];
+  updateTeams: React.Dispatch<React.SetStateAction<Team[]>>;
+};
+
+export default function CreateTeamDialog({ teams, updateTeams }: CreateTeamDialogProps) {
   const [teamName, setTeamName] = useState("");
   const [usernames, setUsernames] = useState([] as string[]);
   const [isOpen, setOpen] = useState(false);
@@ -25,6 +31,22 @@ export default function CreateTeamDialog() {
 
   const teamNameInput = validateInput(teamName.length, 0, 30);
   const usernamesInput = validateInput(usernames.length, 0, 10);
+
+  async function createTeam() {
+    try {
+      const body = { teamName, usernames };
+      const response = await httpPost("/api/teams", body, true);
+      closeDialog();
+      if (response.status === 201) {
+        openSuccessSnackbar();
+        teams.push({ id: response.data.id, name: response.data.name });
+        updateTeams(teams);
+      }
+    } catch (error) {
+      openErrorSnackbar();
+      console.log(error);
+    }
+  }
 
   function openDialog() {
     setOpen(true);
@@ -91,22 +113,6 @@ export default function CreateTeamDialog() {
       );
     } else {
       return null;
-    }
-  }
-
-  // TODO: UX (Teams need to be refreshed after addition)
-  async function createTeam() {
-    try {
-      const body = { teamName, usernames };
-      const response = await httpPost("/api/teams", body, true);
-      closeDialog();
-      if (response.ok) {
-        openSuccessSnackbar();
-      } else {
-        openErrorSnackbar();
-      }
-    } catch (error) {
-      alertWithInternalServerError(error);
     }
   }
 
