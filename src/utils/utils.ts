@@ -8,6 +8,7 @@ export const validateInput = (inputLength: number, minLength: number, maxLength:
   return { isEmpty, isTooLong, isValid };
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const alertWithInternalServerError = (error: any) => {
   alert("Internal Server Error");
   console.log(error);

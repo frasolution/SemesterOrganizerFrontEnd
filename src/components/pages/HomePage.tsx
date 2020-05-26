@@ -8,7 +8,7 @@ import SignUpDialog from "../dialogs/SignUpDialog";
 import LoginDialog from "../dialogs/LoginDialog";
 
 interface StyledProps {
-  img: any;
+  img: string;
 }
 
 const Hero = styled.div<StyledProps>`

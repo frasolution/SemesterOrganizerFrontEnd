@@ -50,7 +50,7 @@ export default function CreateTeamDialog() {
     setErrorOpen(false);
   }
 
-  function handleTeamNameChange(event: any) {
+  function handleTeamNameChange(event: React.ChangeEvent<HTMLInputElement>) {
     setTeamName(event.target.value);
   }
 
