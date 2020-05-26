@@ -43,7 +43,7 @@ export default function TeamsPage() {
     document.title = "Your Teams | FRA UAS Semester Organizer";
 
     return () => source.cancel();
-  }, [teams]);
+  }, []);
 
   return (
     <Fragment>
