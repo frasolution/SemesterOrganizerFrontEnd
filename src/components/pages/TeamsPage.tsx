@@ -19,6 +19,7 @@ const useStyles = makeStyles(() => ({
 
 export default function TeamsPage() {
   const [teams, setTeams] = useState([] as Team[]);
+  const [teamsCount, setTeamsCount] = useState(0);
   const [hasError, setError] = useState(false);
   const classes = useStyles();
 
@@ -43,12 +44,12 @@ export default function TeamsPage() {
     document.title = "Your Teams | FRA UAS Semester Organizer";
 
     return () => source.cancel();
-  }, []);
+  }, [teamsCount]);
 
   return (
     <Fragment>
       <HeaderBar title="Your Teams">
-        <CreateTeamDialog teams={teams} updateTeams={setTeams} />
+        <CreateTeamDialog teamsCount={teamsCount} updateTeamsCount={setTeamsCount} />
       </HeaderBar>
       <Grid container direction="column">
         <Grid item>

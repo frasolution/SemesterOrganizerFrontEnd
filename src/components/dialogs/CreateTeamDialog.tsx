@@ -15,14 +15,13 @@ import ChipInput from "material-ui-chip-input";
 
 import { validateInput } from "../../utils/utils";
 import { httpPost } from "../../utils/http-client";
-import { Team } from "../../types/types";
 
 type CreateTeamDialogProps = {
-  teams: Team[];
-  updateTeams: React.Dispatch<React.SetStateAction<Team[]>>;
+  teamsCount: number;
+  updateTeamsCount: React.Dispatch<React.SetStateAction<number>>;
 };
 
-export default function CreateTeamDialog({ teams, updateTeams }: CreateTeamDialogProps) {
+export default function CreateTeamDialog({ teamsCount, updateTeamsCount }: CreateTeamDialogProps) {
   const [teamName, setTeamName] = useState("");
   const [usernames, setUsernames] = useState([] as string[]);
   const [isOpen, setOpen] = useState(false);
@@ -39,8 +38,8 @@ export default function CreateTeamDialog({ teams, updateTeams }: CreateTeamDialo
       closeDialog();
       if (response.status === 201) {
         openSuccessSnackbar();
-        teams.push({ id: response.data.id, name: response.data.name });
-        updateTeams(teams);
+        teamsCount += 1;
+        updateTeamsCount(teamsCount);
       }
     } catch (error) {
       openErrorSnackbar();
