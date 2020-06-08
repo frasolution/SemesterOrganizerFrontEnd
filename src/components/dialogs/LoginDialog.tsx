@@ -52,9 +52,7 @@ export default function LoginDialog() {
       const response = await httpPost("/api/auth/signin", values);
       if (response.status === 201) {
         setToken(response.data.token);
-        history.push({
-          pathname: "/teams",
-        });
+        history.push("/teams");
       }
     } catch (error) {
       setError(true);

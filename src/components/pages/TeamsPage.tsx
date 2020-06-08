@@ -7,6 +7,7 @@ import CreateTeamDialog from "../dialogs/CreateTeamDialog";
 import { getToken } from "../../utils/jwt";
 import { Team } from "../../types/types";
 import { Link } from "react-router-dom";
+import LogoutDialog from "../dialogs/LogoutDialog";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -53,6 +54,7 @@ export default function TeamsPage() {
     <Fragment>
       <HeaderBar title="Your Teams">
         <CreateTeamDialog teamsCount={teamsCount} updateTeamsCount={setTeamsCount} />
+        <LogoutDialog />
       </HeaderBar>
       <Grid container direction="row">
         {teams.map((team, index) => (
