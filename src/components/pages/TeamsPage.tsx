@@ -5,7 +5,7 @@ import { makeStyles, Typography, Button, Grid } from "@material-ui/core";
 
 import HeaderBar from "../common/HeaderBar";
 import CreateTeamDialog from "../dialogs/CreateTeamDialog";
-import { getHeaders } from "../../utils/http-client";
+import { getToken } from "../../utils/jwt";
 import { Team } from "../../types/types";
 
 const useStyles = makeStyles(() => ({
@@ -28,7 +28,10 @@ export default function TeamsPage() {
     const fetchTeams = async () => {
       try {
         const response = await axios.get("/api/teams", {
-          headers: getHeaders(true),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + getToken(),
+          },
           cancelToken: source.token,
         });
         setTeams(response.data);
