@@ -174,7 +174,7 @@ export default function CreateTeamDialog({ teamsCount, updateTeamsCount }: Creat
       </Snackbar>
       <Snackbar open={isErrorOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
         <MuiAlert severity="error" elevation={6} variant="filled" onClose={handleSnackbarClose}>
-          Could not find certain usernames. Make sure that they exist!
+          Could not find certain usernames! Make sure that they exist.
         </MuiAlert>
       </Snackbar>
     </div>

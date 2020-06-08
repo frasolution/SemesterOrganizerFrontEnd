@@ -1,19 +1,19 @@
 import React, { useState, useEffect, Fragment } from "react";
 import axios from "axios";
-import GroupIcon from "@material-ui/icons/Group";
-import { makeStyles, Typography, Button, Grid } from "@material-ui/core";
+import { makeStyles, Typography, Grid, CardActionArea, Card, CardContent } from "@material-ui/core";
 
 import HeaderBar from "../common/HeaderBar";
 import CreateTeamDialog from "../dialogs/CreateTeamDialog";
 import { getToken } from "../../utils/jwt";
 import { Team } from "../../types/types";
+import { Link } from "react-router-dom";
 
-const useStyles = makeStyles(() => ({
-  button: {
-    margin: "8px",
+const useStyles = makeStyles((theme) => ({
+  card: {
+    margin: theme.spacing(2),
   },
   error: {
-    margin: "8px",
+    margin: "16px",
   },
 }));
 
@@ -54,26 +54,23 @@ export default function TeamsPage() {
       <HeaderBar title="Your Teams">
         <CreateTeamDialog teamsCount={teamsCount} updateTeamsCount={setTeamsCount} />
       </HeaderBar>
-      <Grid container direction="column">
-        <Grid item>
-          {teams.map((team, index) => (
-            <Button
-              key={index}
-              variant="contained"
-              color="secondary"
-              size="large"
-              className={classes.button}
-              startIcon={<GroupIcon fontSize="large" />}
-            >
-              {team.name}
-            </Button>
-          ))}
-          {hasError ? (
-            <Typography variant="body1" color="error" className={classes.error}>
-              Couldn&apos;t fetch your teams.
-            </Typography>
-          ) : null}
-        </Grid>
+      <Grid container direction="row">
+        {teams.map((team, index) => (
+          <Grid item key={index}>
+            <Card elevation={8} className={classes.card}>
+              <CardActionArea component={Link} to={`/teams/${team.id}/courses`}>
+                <CardContent>
+                  <Typography variant="h6">{team.name}</Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
+        ))}
+        {hasError ? (
+          <Typography variant="body1" color="error" className={classes.error}>
+            Couldn&apos;t fetch your teams.
+          </Typography>
+        ) : null}
       </Grid>
     </Fragment>
   );
