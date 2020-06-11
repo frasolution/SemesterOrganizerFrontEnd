@@ -1,17 +1,23 @@
 import React, { useState, useEffect, Fragment } from "react";
 import axios from "axios";
-import { makeStyles, Typography, Grid, CardActionArea, Card, CardContent } from "@material-ui/core";
+import MaterialTable from "material-table";
+import AddIcon from "@material-ui/icons/Add";
+import EnterIcon from "@material-ui/icons/SubdirectoryArrowRight";
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
+import { useHistory } from "react-router-dom";
+import { makeStyles, Typography } from "@material-ui/core";
 
 import HeaderBar from "../common/HeaderBar";
 import CreateTeamDialog from "../dialogs/CreateTeamDialog";
+import LogoutDialog from "../dialogs/LogoutDialog";
+import { PageContainer } from "../styled-components";
 import { getToken } from "../../utils/jwt";
 import { Team } from "../../types/types";
-import { Link } from "react-router-dom";
-import LogoutDialog from "../dialogs/LogoutDialog";
 
 const useStyles = makeStyles((theme) => ({
-  card: {
-    margin: theme.spacing(2),
+  delete: {
+    color: theme.palette.error.main,
   },
   error: {
     margin: "16px",
@@ -21,7 +27,9 @@ const useStyles = makeStyles((theme) => ({
 export default function TeamsPage() {
   const [teams, setTeams] = useState([] as Team[]);
   const [teamsCount, setTeamsCount] = useState(0);
+  const [isOpen, setOpen] = useState(false);
   const [hasError, setError] = useState(false);
+  const history = useHistory();
   const classes = useStyles();
 
   useEffect(() => {
@@ -53,27 +61,55 @@ export default function TeamsPage() {
   return (
     <Fragment>
       <HeaderBar title="Your Teams">
-        <CreateTeamDialog teamsCount={teamsCount} updateTeamsCount={setTeamsCount} />
+        <CreateTeamDialog
+          open={isOpen}
+          setOpen={setOpen}
+          teamsCount={teamsCount}
+          updateTeamsCount={setTeamsCount}
+        />
         <LogoutDialog />
       </HeaderBar>
-      <Grid container direction="row">
-        {teams.map((team, index) => (
-          <Grid item key={index}>
-            <Card elevation={8} className={classes.card}>
-              <CardActionArea component={Link} to={`/teams/${team.id}/courses`}>
-                <CardContent>
-                  <Typography variant="h6">{team.name}</Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          </Grid>
-        ))}
+      <PageContainer>
+        <MaterialTable
+          columns={[{ title: "Team", field: "name" }]}
+          actions={[
+            {
+              icon: () => <AddIcon />,
+              tooltip: "Create Team",
+              isFreeAction: true,
+              onClick: () => setOpen(true),
+            },
+            {
+              icon: () => <EnterIcon />,
+              tooltip: "Visit Team",
+              onClick: (_event, rowData: any) => {
+                history.push(`/teams/${rowData.id}/courses`);
+              },
+            },
+            {
+              icon: () => <EditIcon />,
+              tooltip: "Edit Team Name",
+              onClick: () => alert("Not implemented yet."),
+            },
+            {
+              icon: () => <DeleteIcon className={classes.delete} />,
+              tooltip: "Delete Team",
+              onClick: () => alert("Not implemented yet."),
+            },
+          ]}
+          options={{
+            actionsColumnIndex: -1,
+            showTitle: false,
+            searchFieldAlignment: "left",
+          }}
+          data={teams}
+        />
         {hasError ? (
           <Typography variant="body1" color="error" className={classes.error}>
             Couldn&apos;t fetch your teams.
           </Typography>
         ) : null}
-      </Grid>
+      </PageContainer>
     </Fragment>
   );
 }

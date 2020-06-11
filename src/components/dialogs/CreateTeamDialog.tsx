@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import GroupAddIcon from "@material-ui/icons/GroupAdd";
 import MuiAlert from "@material-ui/lab/Alert";
 import {
   Button,
@@ -17,14 +16,20 @@ import { validateInput } from "../../utils/utils";
 import { httpPost } from "../../utils/http-client";
 
 type CreateTeamDialogProps = {
+  open: boolean;
   teamsCount: number;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   updateTeamsCount: React.Dispatch<React.SetStateAction<number>>;
 };
 
-export default function CreateTeamDialog({ teamsCount, updateTeamsCount }: CreateTeamDialogProps) {
+export default function CreateTeamDialog({
+  open,
+  teamsCount,
+  setOpen,
+  updateTeamsCount,
+}: CreateTeamDialogProps) {
   const [teamName, setTeamName] = useState("");
   const [usernames, setUsernames] = useState([] as string[]);
-  const [isOpen, setOpen] = useState(false);
   const [isSuccessOpen, setSuccessOpen] = useState(false);
   const [isErrorOpen, setErrorOpen] = useState(false);
 
@@ -45,10 +50,6 @@ export default function CreateTeamDialog({ teamsCount, updateTeamsCount }: Creat
       openErrorSnackbar();
       console.log(error);
     }
-  }
-
-  function openDialog() {
-    setOpen(true);
   }
 
   function closeDialog() {
@@ -116,14 +117,11 @@ export default function CreateTeamDialog({ teamsCount, updateTeamsCount }: Creat
   }
 
   return (
-    <div>
-      <Button variant="text" color="inherit" onClick={openDialog} startIcon={<GroupAddIcon />}>
-        Create Team
-      </Button>
+    <React.Fragment>
       <Dialog
         fullWidth
         maxWidth="sm"
-        open={isOpen}
+        open={open}
         onClose={closeDialog}
         aria-labelledby="create-team-dialog-title"
       >
@@ -177,6 +175,6 @@ export default function CreateTeamDialog({ teamsCount, updateTeamsCount }: Creat
           Could not find certain usernames! Make sure that they exist.
         </MuiAlert>
       </Snackbar>
-    </div>
+    </React.Fragment>
   );
 }

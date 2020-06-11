@@ -9,6 +9,7 @@
     "axios": "^0.19.2",
     "formik": "^2.1.4",
     "http-proxy-middleware": "^1.0.3",
+    "material-table": "^1.60.0",
     "material-ui-chip-input": "^1.1.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
