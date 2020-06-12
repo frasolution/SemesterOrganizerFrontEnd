@@ -73,10 +73,21 @@ export default function SignUpDialog() {
       <Formik
         initialValues={signUpFormInitialValues}
         validationSchema={signUpFormValidationSchema}
-        onSubmit={(values: SignUpFormValues) => submit(values)}
+        onSubmit={(values: SignUpFormValues, { resetForm }) => {
+          submit(values);
+          resetForm();
+        }}
       >
         {(formikProps) => {
-          const { values, errors, isValid, touched, handleChange, handleBlur } = formikProps;
+          const {
+            values,
+            errors,
+            isValid,
+            touched,
+            handleChange,
+            handleBlur,
+            resetForm,
+          } = formikProps;
           return (
             <Fragment>
               <Fab
@@ -103,7 +114,7 @@ export default function SignUpDialog() {
                       required
                       helperText={errors.firstname && touched.firstname && errors.firstname}
                       error={Boolean(errors.firstname && touched.firstname)}
-                      value={values.firstname}
+                      value={values.firstname || ""}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       name="firstname"
@@ -172,7 +183,13 @@ export default function SignUpDialog() {
                       fullWidth
                     />
                     <DialogActions>
-                      <Button onClick={closeDialog} color="secondary">
+                      <Button
+                        onClick={() => {
+                          resetForm();
+                          closeDialog();
+                        }}
+                        color="secondary"
+                      >
                         Cancel
                       </Button>
                       <Button type="submit" color="primary" disabled={!isValid}>

@@ -64,10 +64,21 @@ export default function LoginDialog() {
       <Formik
         initialValues={loginFormInitialValues}
         validationSchema={loginFormValidationSchema}
-        onSubmit={(values: LoginFormValues) => submit(values)}
+        onSubmit={(values: LoginFormValues, { resetForm }) => {
+          submit(values);
+          resetForm();
+        }}
       >
         {(formikProps) => {
-          const { values, errors, isValid, touched, handleChange, handleBlur } = formikProps;
+          const {
+            values,
+            errors,
+            isValid,
+            touched,
+            handleChange,
+            handleBlur,
+            resetForm,
+          } = formikProps;
           return (
             <Fragment>
               <Fab
@@ -124,7 +135,13 @@ export default function LoginDialog() {
                       </Typography>
                     ) : null}
                     <DialogActions>
-                      <Button onClick={closeDialog} color="secondary">
+                      <Button
+                        onClick={() => {
+                          resetForm();
+                          closeDialog();
+                        }}
+                        color="secondary"
+                      >
                         Cancel
                       </Button>
                       <Button type="submit" color="primary" disabled={!isValid}>
