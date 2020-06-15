@@ -61,15 +61,15 @@ export default function TeamsPage() {
   return (
     <Fragment>
       <HeaderBar title="Your Teams">
+        <LogoutDialog />
+      </HeaderBar>
+      <PageContainer>
         <CreateTeamDialog
           open={isOpen}
           setOpen={setOpen}
           teamsCount={teamsCount}
           updateTeamsCount={setTeamsCount}
         />
-        <LogoutDialog />
-      </HeaderBar>
-      <PageContainer>
         <MaterialTable
           columns={[{ title: "Team", field: "name" }]}
           actions={[
