@@ -52,8 +52,14 @@ export default function CreateTeamDialog({
     }
   }
 
+  function resetState() {
+    setTeamName("");
+    setUsernames([]);
+  }
+
   function closeDialog() {
     setOpen(false);
+    resetState();
   }
 
   function openSuccessSnackbar() {
@@ -87,12 +93,6 @@ export default function CreateTeamDialog({
           Team name is too long
         </Typography>
       );
-    } else if (teamNameInput.isEmpty) {
-      return (
-        <Typography variant="caption" color="error">
-          Team name cannot be empty
-        </Typography>
-      );
     } else {
       return null;
     }
@@ -105,14 +105,12 @@ export default function CreateTeamDialog({
           You can have at most 10 team members
         </Typography>
       );
-    } else if (usernamesInput.isEmpty) {
+    } else {
       return (
-        <Typography variant="caption" color="error">
-          You need at least one team member
+        <Typography variant="caption" color="textSecondary">
+          Type the username and press Enter to add a team member
         </Typography>
       );
-    } else {
-      return null;
     }
   }
 
@@ -131,7 +129,7 @@ export default function CreateTeamDialog({
             required
             fullWidth
             value={teamName}
-            error={teamNameInput.isTooLong || teamNameInput.isEmpty}
+            error={teamNameInput.isTooLong}
             helperText={renderTeamNameError()}
             onChange={handleTeamNameChange}
             name="teamName"
@@ -143,7 +141,7 @@ export default function CreateTeamDialog({
           <ChipInput
             required
             fullWidth
-            error={usernamesInput.isTooLong || usernamesInput.isEmpty}
+            error={usernamesInput.isTooLong}
             helperText={renderUsernamesError()}
             defaultValue={[]}
             onChange={(chips) => handleUsernamesChange(chips)}
