@@ -1,11 +1,6 @@
-type Course = {
-  id: number;
-  courseNumber: number;
-  courseTitle: string;
-  courseCP: number;
-};
+import { Course } from "../types/types";
 
-export const courses: Course[] = [
+export const fakeCourses: Course[] = [
   { id: 1, courseNumber: 1, courseTitle: "Algebra", courseCP: 5 },
   { id: 1, courseNumber: 2, courseTitle: "Analysis", courseCP: 5 },
   { id: 1, courseNumber: 3, courseTitle: "Einführung in die Informatik", courseCP: 5 },

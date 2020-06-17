@@ -15,3 +15,10 @@ export type Team = {
   id: number;
   name: string;
 };
+
+export type Course = {
+  id: number;
+  courseNumber: number;
+  courseTitle: string;
+  courseCP: number;
+};
