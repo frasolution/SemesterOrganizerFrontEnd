@@ -9,8 +9,8 @@ import { makeStyles, Typography } from "@material-ui/core";
 
 import HeaderBar from "../common/HeaderBar";
 import LogoutDialog from "../dialogs/LogoutDialog";
+import CreateCourseDialog from "../dialogs/CreateCourseDialog";
 import { PageContainer } from "../styled-components";
-import { fakeCourses } from "../../utils/data";
 import { getToken } from "../../utils/jwt";
 import { Course } from "../../types/types";
 
@@ -25,6 +25,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CoursesPage() {
   const [courses, setCourses] = useState([] as Course[]);
+  const [coursesCount, setCoursesCount] = useState(0);
+  const [isOpen, setOpen] = useState(false);
   const [hasError, setError] = useState(false);
   const { teamId } = useParams();
   const history = useHistory();
@@ -41,9 +43,7 @@ export default function CoursesPage() {
           },
           cancelToken: source.token,
         });
-        // TODO: delete log later
-        console.log("Courses response is: ", response.data);
-        setCourses(fakeCourses);
+        setCourses(response.data);
       } catch (error) {
         if (axios.isCancel(error)) {
           return;
@@ -53,29 +53,36 @@ export default function CoursesPage() {
       }
     };
     fetchCourses();
-    document.title = "Your Courses | FRA UAS Semester Organizer";
+    document.title = "Your Modules | FRA UAS Semester Organizer";
 
     return () => source.cancel();
-  }, [teamId]);
+  }, [teamId, coursesCount]);
 
   return (
     <Fragment>
-      <HeaderBar title="Your Courses">
+      <HeaderBar title="Your Modules">
         <LogoutDialog />
       </HeaderBar>
       <PageContainer>
+        <CreateCourseDialog
+          open={isOpen}
+          setOpen={setOpen}
+          coursesCount={coursesCount}
+          updateCoursesCount={setCoursesCount}
+        />
         <MaterialTable
           columns={[
-            { title: "Number", field: "courseNumber" },
-            { title: "Title", field: "courseTitle" },
+            { title: "Module Number", field: "courseNumber" },
+            { title: "Module Name", field: "courseName" },
+            { title: "Semester", field: "courseSemester" },
             { title: "CP", field: "courseCP" },
           ]}
           actions={[
             {
               icon: () => <AddIcon />,
-              tooltip: "Create Course",
+              tooltip: "Add Modules",
               isFreeAction: true,
-              onClick: () => console.log("clicked"),
+              onClick: () => setOpen(true),
             },
             {
               icon: () => <EnterIcon />,

@@ -17,8 +17,8 @@ export type Team = {
 };
 
 export type Course = {
-  id: number;
   courseNumber: number;
-  courseTitle: string;
+  courseName: string;
+  courseSemester: number;
   courseCP: number;
 };
