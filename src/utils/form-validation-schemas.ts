@@ -4,6 +4,7 @@ import {
   LoginFormValues,
   EditTeamFormValues,
   EditCourseFormValues,
+  CreateColumnFormValues,
 } from "../types/types";
 
 const passwordRegex = /((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
@@ -80,4 +81,16 @@ export const editCourseFormValidationSchema = Yup.object({
 
 export const editCourseFormInitialValues: EditCourseFormValues = {
   courseName: "",
+};
+
+// CREATE COLUMN FORM
+export const createColumnFormValidationSchema = Yup.object({
+  columnName: Yup.string()
+    .required()
+    .min(2, "Needs more than 2 characters")
+    .max(30, "Must be 30 characters or less"),
+});
+
+export const createColumnFormInitialValues: CreateColumnFormValues = {
+  columnName: "",
 };

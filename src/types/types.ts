@@ -23,6 +23,10 @@ export type EditCourseFormValues = {
   courseName: string;
 };
 
+export type CreateColumnFormValues = {
+  columnName: string;
+};
+
 export type Team = {
   id: number;
   name: string;
