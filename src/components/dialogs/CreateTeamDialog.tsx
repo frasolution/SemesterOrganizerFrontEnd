@@ -18,17 +18,10 @@ import { getToken } from "../../utils/jwt";
 
 type CreateTeamDialogProps = {
   open: boolean;
-  teamsCount: number;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  updateTeamsCount: React.Dispatch<React.SetStateAction<number>>;
 };
 
-export default function CreateTeamDialog({
-  open,
-  teamsCount,
-  setOpen,
-  updateTeamsCount,
-}: CreateTeamDialogProps) {
+export default function CreateTeamDialog({ open, setOpen }: CreateTeamDialogProps) {
   const [teamName, setTeamName] = useState("");
   const [usernames, setUsernames] = useState([] as string[]);
   const [isSuccessOpen, setSuccessOpen] = useState(false);
@@ -49,8 +42,7 @@ export default function CreateTeamDialog({
       closeDialog();
       if (response.status === 201) {
         openSuccessSnackbar();
-        teamsCount += 1;
-        updateTeamsCount(teamsCount);
+        window.location.reload(false);
       }
     } catch (error) {
       openErrorSnackbar();

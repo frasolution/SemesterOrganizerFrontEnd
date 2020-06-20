@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TeamsPage() {
   const [teams, setTeams] = useState<Team[]>([]);
-  const [teamsCount, setTeamsCount] = useState(0);
   const [isCreateDialogOpen, setCreateDialogOpen] = useState(false);
   const [isEditDialogOpen, setEditDialogOpen] = useState(false);
   const [currentRow, setCurrentRow] = useState<any>({});
@@ -59,7 +58,7 @@ export default function TeamsPage() {
     document.title = "Your Teams | FRA UAS Semester Organizer";
 
     return () => source.cancel();
-  }, [teamsCount]);
+  }, []);
 
   return (
     <Fragment>
@@ -67,12 +66,7 @@ export default function TeamsPage() {
         <LogoutDialog />
       </HeaderBar>
       <PageContainer>
-        <CreateTeamDialog
-          open={isCreateDialogOpen}
-          setOpen={setCreateDialogOpen}
-          teamsCount={teamsCount}
-          updateTeamsCount={setTeamsCount}
-        />
+        <CreateTeamDialog open={isCreateDialogOpen} setOpen={setCreateDialogOpen} />
         <EditTeamDialog open={isEditDialogOpen} setOpen={setEditDialogOpen} rowData={currentRow} />
         <MaterialTable
           columns={[{ title: "Team", field: "name" }]}
