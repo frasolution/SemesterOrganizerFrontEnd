@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CoursesPage() {
   const [courses, setCourses] = useState([] as Course[]);
-  const [coursesCount, setCoursesCount] = useState(0);
   const [isOpen, setOpen] = useState(false);
   const [hasError, setError] = useState(false);
   const { teamId } = useParams();
@@ -56,7 +55,7 @@ export default function CoursesPage() {
     document.title = "Your Modules | FRA UAS Semester Organizer";
 
     return () => source.cancel();
-  }, [teamId, coursesCount]);
+  }, [teamId]);
 
   return (
     <Fragment>
@@ -64,12 +63,7 @@ export default function CoursesPage() {
         <LogoutDialog />
       </HeaderBar>
       <PageContainer>
-        <CreateCourseDialog
-          open={isOpen}
-          setOpen={setOpen}
-          coursesCount={coursesCount}
-          updateCoursesCount={setCoursesCount}
-        />
+        <CreateCourseDialog open={isOpen} setOpen={setOpen} />
         <MaterialTable
           columns={[
             { title: "Module Number", field: "courseNumber" },

@@ -21,9 +21,7 @@ import { getToken } from "../../utils/jwt";
 
 type CreateCourseDialogProps = {
   open: boolean;
-  coursesCount: number;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  updateCoursesCount: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const useStyles = makeStyles(() => ({
@@ -39,12 +37,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function CreateCourseDialog({
-  open,
-  coursesCount,
-  setOpen,
-  updateCoursesCount,
-}: CreateCourseDialogProps) {
+export default function CreateCourseDialog({ open, setOpen }: CreateCourseDialogProps) {
   const [courseNames, setCourseNames] = useState<string[]>([]);
   const { teamId } = useParams();
   const classes = useStyles();
@@ -73,8 +66,7 @@ export default function CreateCourseDialog({
       });
       closeDialog();
       if (response.status === 201) {
-        coursesCount += 1;
-        updateCoursesCount(coursesCount);
+        window.location.reload(false);
       }
     } catch (error) {
       console.log(error);
