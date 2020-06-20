@@ -5,12 +5,14 @@ import MaterialTable from "material-table";
 import AddIcon from "@material-ui/icons/Add";
 import EnterIcon from "@material-ui/icons/SubdirectoryArrowRight";
 import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
 import { makeStyles, Typography } from "@material-ui/core";
 
 import HeaderBar from "../common/HeaderBar";
 import LogoutDialog from "../dialogs/LogoutDialog";
 import CreateCourseDialog from "../dialogs/courses/CreateCourseDialog";
 import DeleteCourseDialog from "../dialogs/courses/DeleteCourseDialog";
+import EditCourseDialog from "../dialogs/courses/EditCourseDialog";
 import { PageContainer } from "../styled-components";
 import { getToken } from "../../utils/jwt";
 import { Course } from "../../types/types";
@@ -27,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
 export default function CoursesPage() {
   const [courses, setCourses] = useState([] as Course[]);
   const [isCreateDialogOpen, setCreateDialogOpen] = useState(false);
+  const [isEditDialogOpen, setEditDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [currentRow, setCurrentRow] = useState<any>({});
   const [hasError, setError] = useState(false);
@@ -67,6 +70,11 @@ export default function CoursesPage() {
       </HeaderBar>
       <PageContainer>
         <CreateCourseDialog open={isCreateDialogOpen} setOpen={setCreateDialogOpen} />
+        <EditCourseDialog
+          open={isEditDialogOpen}
+          setOpen={setEditDialogOpen}
+          rowData={currentRow}
+        />
         <DeleteCourseDialog
           open={isDeleteDialogOpen}
           setOpen={setDeleteDialogOpen}
@@ -91,6 +99,14 @@ export default function CoursesPage() {
               tooltip: "Visit Tasks",
               onClick: (_event, rowData: any) => {
                 history.push(`/teams/${teamId}/courses/${rowData.id}/tasks`);
+              },
+            },
+            {
+              icon: () => <EditIcon />,
+              tooltip: "Edit Course Name",
+              onClick: (_event, rowData: any) => {
+                setCurrentRow(rowData);
+                setEditDialogOpen(true);
               },
             },
             {

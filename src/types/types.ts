@@ -19,6 +19,10 @@ export type EditTeamFormValues = {
   teamName: string;
 };
 
+export type EditCourseFormValues = {
+  courseName: string;
+};
+
 export type Team = {
   id: number;
   name: string;
