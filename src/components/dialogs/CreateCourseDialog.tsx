@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from "react";
+import axios from "axios";
 import { useParams } from "react-router-dom";
 import {
   Dialog,
@@ -16,7 +17,7 @@ import {
 } from "@material-ui/core";
 
 import { allCsCourseNames } from "../../utils/data";
-import { httpPost } from "../../utils/http-client";
+import { getToken } from "../../utils/jwt";
 
 type CreateCourseDialogProps = {
   open: boolean;
@@ -64,7 +65,12 @@ export default function CreateCourseDialog({
   async function createCourse() {
     try {
       const body = { courseNames };
-      const response = await httpPost(`/api/teams/${teamId}/courses`, body, true);
+      const response = await axios.post(`/api/teams/${teamId}/courses`, body, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + getToken(),
+        },
+      });
       closeDialog();
       if (response.status === 201) {
         coursesCount += 1;

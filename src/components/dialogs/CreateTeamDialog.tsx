@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import MuiAlert from "@material-ui/lab/Alert";
 import {
   Button,
@@ -13,7 +14,7 @@ import {
 import ChipInput from "material-ui-chip-input";
 
 import { validateInput } from "../../utils/utils";
-import { httpPost } from "../../utils/http-client";
+import { getToken } from "../../utils/jwt";
 
 type CreateTeamDialogProps = {
   open: boolean;
@@ -39,7 +40,12 @@ export default function CreateTeamDialog({
   async function createTeam() {
     try {
       const body = { teamName, usernames };
-      const response = await httpPost("/api/teams", body, true);
+      const response = await axios.post("/api/teams", body, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + getToken(),
+        },
+      });
       closeDialog();
       if (response.status === 201) {
         openSuccessSnackbar();
