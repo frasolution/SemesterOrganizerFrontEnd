@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { SignUpFormValues, LoginFormValues } from "../types/types";
+import { SignUpFormValues, LoginFormValues, EditTeamFormValues } from "../types/types";
 
 const passwordRegex = /((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
 
@@ -51,4 +51,16 @@ export const loginFormValidationSchema = Yup.object({
 export const loginFormInitialValues: LoginFormValues = {
   username: "",
   password: "",
+};
+
+// EDIT TEAM FORM
+export const editTeamFormValidationSchema = Yup.object({
+  teamName: Yup.string()
+    .required()
+    .min(1, "Needs more than 1 character")
+    .max(30, "Must be 30 characters or less"),
+});
+
+export const editTeamFormInitialValues: EditTeamFormValues = {
+  teamName: "",
 };

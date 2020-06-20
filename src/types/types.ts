@@ -11,6 +11,10 @@ export type LoginFormValues = {
   password: string;
 };
 
+export type EditTeamFormValues = {
+  teamName: string;
+};
+
 export type Team = {
   id: number;
   name: string;

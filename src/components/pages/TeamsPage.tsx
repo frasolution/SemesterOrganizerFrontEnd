@@ -10,6 +10,7 @@ import { makeStyles, Typography } from "@material-ui/core";
 
 import HeaderBar from "../common/HeaderBar";
 import CreateTeamDialog from "../dialogs/CreateTeamDialog";
+import EditTeamDialog from "../dialogs/EditTeamDialog";
 import LogoutDialog from "../dialogs/LogoutDialog";
 import { PageContainer } from "../styled-components";
 import { getToken } from "../../utils/jwt";
@@ -25,9 +26,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TeamsPage() {
-  const [teams, setTeams] = useState([] as Team[]);
+  const [teams, setTeams] = useState<Team[]>([]);
   const [teamsCount, setTeamsCount] = useState(0);
-  const [isOpen, setOpen] = useState(false);
+  const [isCreateDialogOpen, setCreateDialogOpen] = useState(false);
+  const [isEditDialogOpen, setEditDialogOpen] = useState(false);
+  const [currentRow, setCurrentRow] = useState<any>({});
   const [hasError, setError] = useState(false);
   const history = useHistory();
   const classes = useStyles();
@@ -65,11 +68,12 @@ export default function TeamsPage() {
       </HeaderBar>
       <PageContainer>
         <CreateTeamDialog
-          open={isOpen}
-          setOpen={setOpen}
+          open={isCreateDialogOpen}
+          setOpen={setCreateDialogOpen}
           teamsCount={teamsCount}
           updateTeamsCount={setTeamsCount}
         />
+        <EditTeamDialog open={isEditDialogOpen} setOpen={setEditDialogOpen} rowData={currentRow} />
         <MaterialTable
           columns={[{ title: "Team", field: "name" }]}
           actions={[
@@ -77,7 +81,7 @@ export default function TeamsPage() {
               icon: () => <AddIcon />,
               tooltip: "Create Team",
               isFreeAction: true,
-              onClick: () => setOpen(true),
+              onClick: () => setCreateDialogOpen(true),
             },
             {
               icon: () => <EnterIcon />,
@@ -89,7 +93,10 @@ export default function TeamsPage() {
             {
               icon: () => <EditIcon />,
               tooltip: "Edit Team Name",
-              onClick: () => alert("Not implemented yet."),
+              onClick: (_event, rowData: any) => {
+                setCurrentRow(rowData);
+                setEditDialogOpen(true);
+              },
             },
             {
               icon: () => <DeleteIcon className={classes.delete} />,
