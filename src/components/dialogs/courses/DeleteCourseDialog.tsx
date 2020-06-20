@@ -1,5 +1,9 @@
 import React from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
+
+import { CoursesRowData } from "../../../types/types";
+import { getToken } from "../../../utils/jwt";
 import {
   Dialog,
   DialogTitle,
@@ -9,22 +13,22 @@ import {
   Button,
 } from "@material-ui/core";
 
-import { getToken } from "../../utils/jwt";
-
-type DeleteTeamDialogProps = {
+type DeleteCourseDialogProps = {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  rowData: { id: number; name: string; tableData: any };
+  rowData: CoursesRowData;
 };
 
-export default function DeleteTeamDialog({ open, setOpen, rowData }: DeleteTeamDialogProps) {
+export default function DeleteCourseDialog({ open, setOpen, rowData }: DeleteCourseDialogProps) {
+  const { teamId } = useParams();
+
   function closeDialog() {
     setOpen(false);
   }
 
   async function handleDelete() {
     try {
-      const response = await axios.delete(`/api/teams/${rowData.id}`, {
+      const response = await axios.delete(`/api/teams/${teamId}/courses/${rowData.id}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + getToken(),
@@ -46,12 +50,12 @@ export default function DeleteTeamDialog({ open, setOpen, rowData }: DeleteTeamD
       maxWidth="sm"
       open={open}
       onClose={closeDialog}
-      aria-labelledby="delete-team-dialog-title"
+      aria-labelledby="delete-course-dialog-title"
     >
-      <DialogTitle id="delete-team-dialog-title">Delete this Team?</DialogTitle>
+      <DialogTitle id="delete-course-dialog-title">Delete this Course?</DialogTitle>
       <DialogContent>
         <Typography color="textSecondary">
-          You are about to delete this team. Do you want to continue?
+          You are about to delete this course. Do you want to continue?
         </Typography>
       </DialogContent>
       <DialogActions>

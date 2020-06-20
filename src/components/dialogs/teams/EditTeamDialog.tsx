@@ -11,17 +11,17 @@ import {
 } from "@material-ui/core";
 import { Formik, Form } from "formik";
 
-import { EditTeamFormValues } from "../../types/types";
+import { EditTeamFormValues, TeamsRowData } from "../../../types/types";
 import {
   editTeamFormInitialValues,
   editTeamFormValidationSchema,
-} from "../../utils/form-validation-schemas";
-import { getToken } from "../../utils/jwt";
+} from "../../../utils/form-validation-schemas";
+import { getToken } from "../../../utils/jwt";
 
 type EditTeamDialogProps = {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  rowData: { id: number; name: string; tableData: any };
+  rowData: TeamsRowData;
 };
 
 export default function EditTeamDialog({ open, setOpen, rowData }: EditTeamDialogProps) {

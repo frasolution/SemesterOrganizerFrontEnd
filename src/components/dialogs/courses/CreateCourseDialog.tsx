@@ -16,8 +16,8 @@ import {
   makeStyles,
 } from "@material-ui/core";
 
-import { allCsCourseNames } from "../../utils/data";
-import { getToken } from "../../utils/jwt";
+import { allCsCourseNames } from "../../../utils/data";
+import { getToken } from "../../../utils/jwt";
 
 type CreateCourseDialogProps = {
   open: boolean;

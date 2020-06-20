@@ -13,8 +13,8 @@ import {
 } from "@material-ui/core";
 import ChipInput from "material-ui-chip-input";
 
-import { validateInput } from "../../utils/utils";
-import { getToken } from "../../utils/jwt";
+import { validateInput } from "../../../utils/utils";
+import { getToken } from "../../../utils/jwt";
 
 type CreateTeamDialogProps = {
   open: boolean;

@@ -1,3 +1,7 @@
+type RowData = {
+  tableData: any;
+};
+
 export type SignUpFormValues = {
   firstname: string;
   lastname: string;
@@ -26,3 +30,7 @@ export type Course = {
   courseSemester: number;
   courseCP: number;
 };
+
+export type TeamsRowData = Team & RowData;
+
+export type CoursesRowData = Course & RowData & { id: number };

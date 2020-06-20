@@ -9,7 +9,8 @@ import { makeStyles, Typography } from "@material-ui/core";
 
 import HeaderBar from "../common/HeaderBar";
 import LogoutDialog from "../dialogs/LogoutDialog";
-import CreateCourseDialog from "../dialogs/CreateCourseDialog";
+import CreateCourseDialog from "../dialogs/courses/CreateCourseDialog";
+import DeleteCourseDialog from "../dialogs/courses/DeleteCourseDialog";
 import { PageContainer } from "../styled-components";
 import { getToken } from "../../utils/jwt";
 import { Course } from "../../types/types";
@@ -25,7 +26,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CoursesPage() {
   const [courses, setCourses] = useState([] as Course[]);
-  const [isOpen, setOpen] = useState(false);
+  const [isCreateDialogOpen, setCreateDialogOpen] = useState(false);
+  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [currentRow, setCurrentRow] = useState<any>({});
   const [hasError, setError] = useState(false);
   const { teamId } = useParams();
   const history = useHistory();
@@ -63,7 +66,12 @@ export default function CoursesPage() {
         <LogoutDialog />
       </HeaderBar>
       <PageContainer>
-        <CreateCourseDialog open={isOpen} setOpen={setOpen} />
+        <CreateCourseDialog open={isCreateDialogOpen} setOpen={setCreateDialogOpen} />
+        <DeleteCourseDialog
+          open={isDeleteDialogOpen}
+          setOpen={setDeleteDialogOpen}
+          rowData={currentRow}
+        />
         <MaterialTable
           columns={[
             { title: "Module Number", field: "courseNumber" },
@@ -76,7 +84,7 @@ export default function CoursesPage() {
               icon: () => <AddIcon />,
               tooltip: "Add Modules",
               isFreeAction: true,
-              onClick: () => setOpen(true),
+              onClick: () => setCreateDialogOpen(true),
             },
             {
               icon: () => <EnterIcon />,
@@ -88,7 +96,10 @@ export default function CoursesPage() {
             {
               icon: () => <DeleteIcon className={classes.delete} />,
               tooltip: "Delete Course",
-              onClick: () => alert("Not implemented yet."),
+              onClick: (_event, rowData: any) => {
+                setCurrentRow(rowData);
+                setDeleteDialogOpen(true);
+              },
             },
           ]}
           options={{

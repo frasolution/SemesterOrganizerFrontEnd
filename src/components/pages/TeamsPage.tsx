@@ -9,9 +9,9 @@ import { useHistory } from "react-router-dom";
 import { makeStyles, Typography } from "@material-ui/core";
 
 import HeaderBar from "../common/HeaderBar";
-import CreateTeamDialog from "../dialogs/CreateTeamDialog";
-import EditTeamDialog from "../dialogs/EditTeamDialog";
-import DeleteTeamDialog from "../dialogs/DeleteTeamDialog";
+import CreateTeamDialog from "../dialogs/teams/CreateTeamDialog";
+import EditTeamDialog from "../dialogs/teams/EditTeamDialog";
+import DeleteTeamDialog from "../dialogs/teams/DeleteTeamDialog";
 import LogoutDialog from "../dialogs/LogoutDialog";
 import { PageContainer } from "../styled-components";
 import { getToken } from "../../utils/jwt";
