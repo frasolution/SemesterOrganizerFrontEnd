@@ -11,6 +11,7 @@ import { makeStyles, Typography } from "@material-ui/core";
 import HeaderBar from "../common/HeaderBar";
 import CreateTeamDialog from "../dialogs/CreateTeamDialog";
 import EditTeamDialog from "../dialogs/EditTeamDialog";
+import DeleteTeamDialog from "../dialogs/DeleteTeamDialog";
 import LogoutDialog from "../dialogs/LogoutDialog";
 import { PageContainer } from "../styled-components";
 import { getToken } from "../../utils/jwt";
@@ -29,6 +30,7 @@ export default function TeamsPage() {
   const [teams, setTeams] = useState<Team[]>([]);
   const [isCreateDialogOpen, setCreateDialogOpen] = useState(false);
   const [isEditDialogOpen, setEditDialogOpen] = useState(false);
+  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [currentRow, setCurrentRow] = useState<any>({});
   const [hasError, setError] = useState(false);
   const history = useHistory();
@@ -68,6 +70,11 @@ export default function TeamsPage() {
       <PageContainer>
         <CreateTeamDialog open={isCreateDialogOpen} setOpen={setCreateDialogOpen} />
         <EditTeamDialog open={isEditDialogOpen} setOpen={setEditDialogOpen} rowData={currentRow} />
+        <DeleteTeamDialog
+          open={isDeleteDialogOpen}
+          setOpen={setDeleteDialogOpen}
+          rowData={currentRow}
+        />
         <MaterialTable
           columns={[{ title: "Team", field: "name" }]}
           actions={[
@@ -95,7 +102,10 @@ export default function TeamsPage() {
             {
               icon: () => <DeleteIcon className={classes.delete} />,
               tooltip: "Delete Team",
-              onClick: () => alert("Not implemented yet."),
+              onClick: (_event, rowData: any) => {
+                setCurrentRow(rowData);
+                setDeleteDialogOpen(true);
+              },
             },
           ]}
           options={{
