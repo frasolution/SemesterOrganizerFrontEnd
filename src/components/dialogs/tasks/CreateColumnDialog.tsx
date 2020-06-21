@@ -1,4 +1,6 @@
 import React, { Fragment, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 import AddIcon from "@material-ui/icons/Add";
 import {
   Button,
@@ -7,10 +9,10 @@ import {
   DialogContent,
   DialogTitle,
   TextField,
-  Typography,
 } from "@material-ui/core";
 import { Formik, Form } from "formik";
 
+import { getToken } from "../../../utils/jwt";
 import { CreateColumnFormValues } from "../../../types/types";
 import {
   createColumnFormInitialValues,
@@ -19,7 +21,7 @@ import {
 
 export default function CreateColumnDialog() {
   const [isOpen, setOpen] = useState(false);
-  const [isError, setError] = useState(false);
+  const { teamId, courseId } = useParams();
 
   function openDialog() {
     setOpen(true);
@@ -30,8 +32,25 @@ export default function CreateColumnDialog() {
   }
 
   async function submit(values: CreateColumnFormValues) {
-    console.log(values);
-    alert("Not implemented yet.");
+    try {
+      const response = await axios.post(
+        `/api/teams/${teamId}/courses/${courseId}/columns`,
+        values,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + getToken(),
+          },
+        }
+      );
+      closeDialog();
+      if (response.status === 201) {
+        window.location.reload(false);
+      }
+    } catch (error) {
+      // TODO: handle error more UX friendly
+      console.log(error);
+    }
   }
 
   return (
@@ -76,18 +95,13 @@ export default function CreateColumnDialog() {
                       value={values.columnName}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      name="username"
-                      label="Username"
+                      name="columnName"
+                      label="Column Name"
                       type="text"
                       margin="dense"
                       autoComplete="off"
                       fullWidth
                     />
-                    {isError ? (
-                      <Typography variant="subtitle2" color="error">
-                        Column name is wrong
-                      </Typography>
-                    ) : null}
                     <DialogActions>
                       <Button
                         onClick={() => {

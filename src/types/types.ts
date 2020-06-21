@@ -39,6 +39,11 @@ export type Course = {
   courseCP: number;
 };
 
+export type ColumnType = {
+  id: number;
+  title: string;
+};
+
 export type TeamsRowData = Team & RowData;
 
 export type CoursesRowData = Course & RowData & { id: number };
