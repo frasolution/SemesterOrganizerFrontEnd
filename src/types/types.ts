@@ -27,6 +27,10 @@ export type CreateColumnFormValues = {
   columnName: string;
 };
 
+export type EditColumnFormValues = {
+  columnName: string;
+};
+
 export type Team = {
   id: number;
   name: string;

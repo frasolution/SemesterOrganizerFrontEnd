@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles, CardHeader, Typography } from "@material-ui/core";
 
 import CreateTaskButton from "./CreateTaskButton";
-import EditColumnButton from "./EditColumnButton";
+import EditColumnDialog from "../dialogs/columns/EditColumnDialog";
 import DeleteColumnButton from "./DeleteColumnButton";
 
 type ColumnHeaderProps = {
@@ -28,7 +28,7 @@ export default function ColumnHeader(props: ColumnHeaderProps) {
       action={
         <div>
           <CreateTaskButton columnId={id} />
-          <EditColumnButton columnId={id} columnTitle={title} />
+          <EditColumnDialog columnId={id} columnTitle={title} />
           <DeleteColumnButton columnId={id} />
         </div>
       }
