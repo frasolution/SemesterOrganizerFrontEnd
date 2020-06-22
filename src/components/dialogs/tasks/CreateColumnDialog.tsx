@@ -76,7 +76,7 @@ export default function CreateColumnDialog() {
           return (
             <Fragment>
               <Button variant="text" color="inherit" onClick={openDialog} startIcon={<AddIcon />}>
-                Create Column
+                New Column
               </Button>
               <Dialog
                 fullWidth
