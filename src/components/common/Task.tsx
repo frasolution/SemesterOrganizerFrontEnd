@@ -1,6 +1,9 @@
 import React from "react";
 import { Card, CardContent, Typography, CardActions, makeStyles } from "@material-ui/core";
 
+import ViewTaskDialog from "../dialogs/tasks/ViewTaskDialog";
+import EditTaskDialog from "../dialogs/tasks/EditTaskDialog";
+import DeleteTaskDialog from "../dialogs/tasks/DeleteTaskDialog";
 import { CardContainer } from "../styled-components";
 
 type TaskProps = {
@@ -41,7 +44,23 @@ export default function Task({
           </Typography>
         </CardContent>
         <CardActions disableSpacing className={classes.actions}>
-          Actions come here
+          <ViewTaskDialog
+            id={id}
+            title={title}
+            description={description}
+            dueDate={dueDate}
+            priority={priority}
+            isCompleted={isCompleted}
+          />
+          <EditTaskDialog
+            id={id}
+            title={title}
+            description={description}
+            dueDate={dueDate}
+            priority={priority}
+            isCompleted={isCompleted}
+          />
+          <DeleteTaskDialog id={id} />
         </CardActions>
       </Card>
     </CardContainer>
