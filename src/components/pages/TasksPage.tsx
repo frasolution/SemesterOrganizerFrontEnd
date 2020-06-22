@@ -60,7 +60,20 @@ export default function TasksPage() {
         {columns.map((column, index) => {
           return (
             <Column key={index} id={column.id} title={column.title}>
-              <Task />
+              {column.tasks.map((task, idx) => {
+                const { id, title, description, dueDate, priority, isCompleted } = task;
+                return (
+                  <Task
+                    key={idx}
+                    id={id}
+                    title={title}
+                    description={description}
+                    dueDate={dueDate}
+                    priority={priority}
+                    isCompleted={isCompleted}
+                  />
+                );
+              })}
             </Column>
           );
         })}

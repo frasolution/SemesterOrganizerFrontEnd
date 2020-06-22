@@ -1,4 +1,6 @@
 import React, { Fragment, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 import DateFnsUtils from "@date-io/date-fns";
 import AddIcon from "@material-ui/icons/Add";
 import Rating from "@material-ui/lab/Rating";
@@ -15,6 +17,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/pickers";
+import { getToken } from "../../../utils/jwt";
 
 type CreateTaskDialogProps = {
   columnId: number;
@@ -53,6 +56,7 @@ export default function CreateTaskDialog({ columnId }: CreateTaskDialogProps) {
   const [priority, setPriority] = useState<number | null>(0);
   const [dueDate, setDueDate] = useState<Date | null>(null);
   const classes = useStyles();
+  const { teamId, courseId } = useParams();
 
   function openDialog() {
     setOpen(true);
@@ -75,7 +79,25 @@ export default function CreateTaskDialog({ columnId }: CreateTaskDialogProps) {
   }
 
   async function handleSubmit() {
-    console.log({ columnId, title, description, priority, dueDate });
+    try {
+      const body = { title, description, priority, dueDate };
+      const response = await axios.post(
+        `/api/teams/${teamId}/courses/${courseId}/columns/${columnId}/tasks`,
+        body,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + getToken(),
+          },
+        }
+      );
+      closeDialog();
+      if (response.status === 201) {
+        window.location.reload(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -105,7 +127,6 @@ export default function CreateTaskDialog({ columnId }: CreateTaskDialogProps) {
               fullWidth
             />
             <TextField
-              required
               multiline
               rowsMax={Infinity}
               value={description}
@@ -166,7 +187,7 @@ export default function CreateTaskDialog({ columnId }: CreateTaskDialogProps) {
             <Button onClick={closeDialog} color="secondary">
               Cancel
             </Button>
-            <Button onClick={handleSubmit} color="primary">
+            <Button onClick={handleSubmit} color="primary" disabled={!(title.length >= 1)}>
               Create
             </Button>
           </DialogActions>

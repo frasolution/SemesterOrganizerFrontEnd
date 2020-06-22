@@ -1,15 +1,16 @@
 import React from "react";
-import {
-  Card,
-  CardContent,
-  Typography,
-  CardActions,
-  CardHeader,
-  makeStyles,
-  Divider,
-} from "@material-ui/core";
+import { Card, CardContent, Typography, CardActions, makeStyles } from "@material-ui/core";
 
 import { CardContainer } from "../styled-components";
+
+type TaskProps = {
+  id: number;
+  title: string;
+  description: string;
+  dueDate: Date | null;
+  priority: number | null;
+  isCompleted: boolean;
+};
 
 const useStyles = makeStyles(() => ({
   cardHeader: {
@@ -21,24 +22,22 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function Task() {
+export default function Task({
+  id,
+  title,
+  description,
+  dueDate,
+  priority,
+  isCompleted,
+}: TaskProps) {
   const classes = useStyles();
 
   return (
     <CardContainer>
       <Card elevation={8}>
-        <CardHeader
-          className={classes.cardHeader}
-          title={
-            <Typography variant="body2" component={"span"}>
-              Task title comes here
-            </Typography>
-          }
-        />
-        <Divider />
         <CardContent>
           <Typography variant="body2" color="textSecondary" component={"p"}>
-            Task content comes here
+            {title}
           </Typography>
         </CardContent>
         <CardActions disableSpacing className={classes.actions}>

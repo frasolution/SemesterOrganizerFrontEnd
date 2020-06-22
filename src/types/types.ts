@@ -46,6 +46,16 @@ export type Course = {
 export type ColumnType = {
   id: number;
   title: string;
+  tasks: TaskType[];
+};
+
+export type TaskType = {
+  id: number;
+  title: string;
+  description: string;
+  dueDate: Date | null;
+  priority: number | null;
+  isCompleted: boolean;
 };
 
 export type TeamsRowData = Team & RowData;
