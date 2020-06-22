@@ -3,7 +3,7 @@ import { makeStyles, CardHeader, Typography } from "@material-ui/core";
 
 import CreateTaskButton from "./CreateTaskButton";
 import EditColumnDialog from "../dialogs/columns/EditColumnDialog";
-import DeleteColumnButton from "./DeleteColumnButton";
+import DeleteColumnDialog from "../dialogs/columns/DeleteColumnDialog";
 
 type ColumnHeaderProps = {
   id: number;
@@ -29,7 +29,7 @@ export default function ColumnHeader(props: ColumnHeaderProps) {
         <div>
           <CreateTaskButton columnId={id} />
           <EditColumnDialog columnId={id} columnTitle={title} />
-          <DeleteColumnButton columnId={id} />
+          <DeleteColumnDialog columnId={id} />
         </div>
       }
     />
