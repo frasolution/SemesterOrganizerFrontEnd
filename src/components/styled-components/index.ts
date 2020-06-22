@@ -8,6 +8,10 @@ export const FlexContainer = styled.div`
   display: flex;
 `;
 
+export const CardContainer = styled.div`
+  padding: 16px;
+`;
+
 export const ColumnContainerStyles = css`
   display: flex;
   flex-direction: column;

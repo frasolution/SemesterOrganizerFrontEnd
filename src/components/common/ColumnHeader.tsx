@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles, CardHeader, Typography } from "@material-ui/core";
 
-import CreateTaskButton from "./CreateTaskButton";
+import CreateTaskDialog from "../dialogs/tasks/CreateTaskDialog";
 import EditColumnDialog from "../dialogs/columns/EditColumnDialog";
 import DeleteColumnDialog from "../dialogs/columns/DeleteColumnDialog";
 
@@ -27,7 +27,7 @@ export default function ColumnHeader(props: ColumnHeaderProps) {
       title={<Typography variant="subtitle2">{title}</Typography>}
       action={
         <div>
-          <CreateTaskButton columnId={id} />
+          <CreateTaskDialog columnId={id} />
           <EditColumnDialog columnId={id} columnTitle={title} />
           <DeleteColumnDialog columnId={id} />
         </div>

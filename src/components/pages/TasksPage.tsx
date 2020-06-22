@@ -1,15 +1,16 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
+import { useParams } from "react-router-dom";
+import { Typography, makeStyles } from "@material-ui/core";
 
 import HeaderBar from "../common/HeaderBar";
 import Column from "../common/Column";
+import Task from "../common/Task";
 import LogoutDialog from "../dialogs/LogoutDialog";
-import CreateColumnDialog from "../dialogs/tasks/CreateColumnDialog";
+import CreateColumnDialog from "../dialogs/columns/CreateColumnDialog";
 import { getToken } from "../../utils/jwt";
 import { ColumnType } from "../../types/types";
 import { FlexContainer } from "../styled-components";
-import { Card, CardContent, Typography, CardActions, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
   error: {
@@ -59,16 +60,7 @@ export default function TasksPage() {
         {columns.map((column, index) => {
           return (
             <Column key={index} id={column.id} title={column.title}>
-              <div style={{ padding: "16px" }}>
-                <Card elevation={8}>
-                  <CardContent>
-                    <Typography variant="body2" color="textSecondary" component={"p"}>
-                      {column.title}
-                    </Typography>
-                  </CardContent>
-                  <CardActions>actions</CardActions>
-                </Card>
-              </div>
+              <Task />
             </Column>
           );
         })}
