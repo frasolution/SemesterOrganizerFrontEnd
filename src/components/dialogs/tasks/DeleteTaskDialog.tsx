@@ -8,7 +8,7 @@ type DeleteTaskDialogProps = {
 
 const useStyles = makeStyles((theme) => ({
   button: {
-    color: theme.palette.primary.light,
+    color: theme.palette.error.main,
   },
 }));
 

@@ -1,5 +1,13 @@
 import React from "react";
-import { Card, CardContent, Typography, CardActions, makeStyles } from "@material-ui/core";
+import CheckIcon from "@material-ui/icons/Check";
+import {
+  Card,
+  Typography,
+  CardActions,
+  makeStyles,
+  CardHeader,
+  IconButton,
+} from "@material-ui/core";
 
 import ViewTaskDialog from "../dialogs/tasks/ViewTaskDialog";
 import EditTaskDialog from "../dialogs/tasks/EditTaskDialog";
@@ -15,13 +23,16 @@ type TaskProps = {
   isCompleted: boolean;
 };
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   cardHeader: {
     padding: "8px",
   },
   actions: {
     display: "flex",
     justifyContent: "flex-end",
+  },
+  complete: {
+    color: theme.palette.success.main,
   },
 }));
 
@@ -38,11 +49,24 @@ export default function Task({
   return (
     <CardContainer>
       <Card elevation={8}>
-        <CardContent>
-          <Typography variant="body2" color="textSecondary" component={"p"}>
-            {title}
-          </Typography>
-        </CardContent>
+        <CardHeader
+          title={
+            <Typography variant="body1" color="textSecondary" component={"p"}>
+              {title}
+            </Typography>
+          }
+          action={
+            isCompleted ? null : (
+              <IconButton
+                size="small"
+                className={classes.complete}
+                onClick={() => console.log("completed")}
+              >
+                <CheckIcon fontSize="small" />
+              </IconButton>
+            )
+          }
+        />
         <CardActions disableSpacing className={classes.actions}>
           <ViewTaskDialog
             id={id}
