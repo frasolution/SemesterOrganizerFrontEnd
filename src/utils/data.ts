@@ -68,3 +68,11 @@ export const allCsCourses: Course[] = [
 ];
 
 export const allCsCourseNames: string[] = allCsCourses.map((course) => course.courseName);
+
+export const priorityLabels: { [index: string]: string } = {
+  0: "Very Low",
+  1: "Low",
+  2: "Medium",
+  3: "High",
+  4: "Very High",
+};

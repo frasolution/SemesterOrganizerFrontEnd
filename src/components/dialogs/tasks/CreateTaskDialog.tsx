@@ -1,7 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import DateFnsUtils from "@date-io/date-fns";
 import AddIcon from "@material-ui/icons/Add";
 import Rating from "@material-ui/lab/Rating";
 import {
@@ -16,19 +15,12 @@ import {
   Box,
   Typography,
 } from "@material-ui/core";
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/pickers";
+import { KeyboardDatePicker } from "@material-ui/pickers";
 import { getToken } from "../../../utils/jwt";
+import { priorityLabels } from "../../../utils/data";
 
 type CreateTaskDialogProps = {
   columnId: number;
-};
-
-const priorityLabels: { [index: string]: string } = {
-  0: "Very Low",
-  1: "Low",
-  2: "Medium",
-  3: "High",
-  4: "Very High",
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -138,23 +130,21 @@ export default function CreateTaskDialog({ columnId }: CreateTaskDialogProps) {
               autoComplete="off"
               fullWidth
             />
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <KeyboardDatePicker
-                className={classes.dueDate}
-                disableToolbar
-                variant="inline"
-                format="MM/dd/yyyy"
-                margin="normal"
-                id="date-picker-inline"
-                label="Due Date"
-                value={dueDate}
-                fullWidth
-                onChange={handleDateChange}
-                KeyboardButtonProps={{
-                  "aria-label": "change date",
-                }}
-              />
-            </MuiPickersUtilsProvider>
+            <KeyboardDatePicker
+              className={classes.dueDate}
+              disableToolbar
+              variant="inline"
+              format="MM/dd/yyyy"
+              margin="normal"
+              id="date-picker-inline"
+              label="Due Date"
+              value={dueDate}
+              fullWidth
+              onChange={handleDateChange}
+              KeyboardButtonProps={{
+                "aria-label": "change date",
+              }}
+            />
             <div className={classes.priority}>
               <label htmlFor="priority-rating">
                 <Typography variant="body1" color="textSecondary">
