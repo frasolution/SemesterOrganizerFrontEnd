@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import CheckIcon from "@material-ui/icons/Check";
+import ClearIcon from "@material-ui/icons/Clear";
 import {
   Card,
   Typography,
@@ -45,6 +46,9 @@ const useStyles = makeStyles((theme) => ({
   complete: {
     color: theme.palette.success.main,
   },
+  incomplete: {
+    color: theme.palette.error.main,
+  },
   open: {
     backgroundColor: theme.palette.error.main,
     color: "white",
@@ -74,7 +78,7 @@ export default function Task({
     try {
       const response = await axios.patch(
         `/api/teams/${teamId}/courses/${courseId}/columns/${columnId}/tasks/${id}/complete`,
-        null,
+        { isCompleted },
         {
           headers: {
             "Content-Type": "application/json",
@@ -102,7 +106,11 @@ export default function Task({
             )
           }
           action={
-            isCompleted ? null : (
+            isCompleted ? (
+              <IconButton size="small" className={classes.incomplete} onClick={handleComplete}>
+                <ClearIcon fontSize="small" />
+              </IconButton>
+            ) : (
               <IconButton size="small" className={classes.complete} onClick={handleComplete}>
                 <CheckIcon fontSize="small" />
               </IconButton>
