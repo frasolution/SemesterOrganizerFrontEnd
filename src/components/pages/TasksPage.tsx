@@ -57,27 +57,29 @@ export default function TasksPage() {
         <LogoutDialog />
       </HeaderBar>
       <FlexContainer>
-        {columns.map((column, index) => {
-          return (
-            <Column key={index} id={column.id} title={column.title}>
-              {column.tasks.map((task, idx) => {
-                const { id, title, description, dueDate, priority, isCompleted } = task;
-                return (
-                  <Task
-                    key={idx}
-                    columnId={column.id}
-                    id={id}
-                    title={title}
-                    description={description}
-                    dueDate={dueDate}
-                    priority={priority}
-                    isCompleted={isCompleted}
-                  />
-                );
-              })}
-            </Column>
-          );
-        })}
+        {columns
+          .sort((a, b) => a.id - b.id)
+          .map((column, index) => {
+            return (
+              <Column key={index} id={column.id} title={column.title}>
+                {column.tasks.map((task, idx) => {
+                  const { id, title, description, dueDate, priority, isCompleted } = task;
+                  return (
+                    <Task
+                      key={idx}
+                      columnId={column.id}
+                      id={id}
+                      title={title}
+                      description={description}
+                      dueDate={dueDate}
+                      priority={priority}
+                      isCompleted={isCompleted}
+                    />
+                  );
+                })}
+              </Column>
+            );
+          })}
         {isError ? (
           <Typography variant="body1" color="error" className={classes.error}>
             Couldn&apos;t fetch columns.
