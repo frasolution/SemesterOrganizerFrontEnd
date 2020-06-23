@@ -47,8 +47,8 @@ export default function CreateTaskDialog({ columnId }: CreateTaskDialogProps) {
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState<number | null>(0);
   const [dueDate, setDueDate] = useState<Date | null>(null);
-  const classes = useStyles();
   const { teamId, courseId } = useParams();
+  const classes = useStyles();
 
   function openDialog() {
     setOpen(true);

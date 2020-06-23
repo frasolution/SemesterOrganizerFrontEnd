@@ -80,6 +80,7 @@ export default function Task({
           />
           <EditTaskDialog
             id={id}
+            columnId={columnId}
             title={title}
             description={description}
             dueDate={dueDate}
