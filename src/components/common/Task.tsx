@@ -12,6 +12,7 @@ import {
 import ViewTaskDialog from "../dialogs/tasks/ViewTaskDialog";
 import EditTaskDialog from "../dialogs/tasks/EditTaskDialog";
 import DeleteTaskDialog from "../dialogs/tasks/DeleteTaskDialog";
+import MoveTaskDialog from "../dialogs/tasks/MoveTaskDialog";
 import { CardContainer } from "../styled-components";
 
 type TaskProps = {
@@ -29,6 +30,10 @@ const useStyles = makeStyles((theme) => ({
     padding: "8px",
   },
   actions: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+  crudActions: {
     display: "flex",
     justifyContent: "flex-end",
   },
@@ -78,16 +83,19 @@ export default function Task({
             priority={priority}
             isCompleted={isCompleted}
           />
-          <EditTaskDialog
-            id={id}
-            columnId={columnId}
-            title={title}
-            description={description}
-            dueDate={dueDate}
-            priority={priority}
-            isCompleted={isCompleted}
-          />
-          <DeleteTaskDialog id={id} columnId={columnId} />
+          <div className={classes.crudActions}>
+            <MoveTaskDialog id={id} columnId={columnId} />
+            <EditTaskDialog
+              id={id}
+              columnId={columnId}
+              title={title}
+              description={description}
+              dueDate={dueDate}
+              priority={priority}
+              isCompleted={isCompleted}
+            />
+            <DeleteTaskDialog id={id} columnId={columnId} />
+          </div>
         </CardActions>
       </Card>
     </CardContainer>
