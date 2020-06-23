@@ -6,7 +6,7 @@ import AddIcon from "@material-ui/icons/Add";
 import EnterIcon from "@material-ui/icons/SubdirectoryArrowRight";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
-import { makeStyles, Typography } from "@material-ui/core";
+import { makeStyles, Typography, Breadcrumbs, Link } from "@material-ui/core";
 
 import HeaderBar from "../common/HeaderBar";
 import LogoutDialog from "../dialogs/LogoutDialog";
@@ -21,8 +21,11 @@ const useStyles = makeStyles((theme) => ({
   delete: {
     color: theme.palette.error.main,
   },
-  error: {
+  root: {
     margin: "16px",
+  },
+  link: {
+    cursor: "pointer",
   },
 }));
 
@@ -80,6 +83,14 @@ export default function CoursesPage() {
           setOpen={setDeleteDialogOpen}
           rowData={currentRow}
         />
+        <Breadcrumbs className={classes.root} aria-label="breadcrumb">
+          <Link color="inherit" className={classes.link} onClick={() => history.push("/teams")}>
+            Teams
+          </Link>
+          <Link color="textPrimary" className={classes.link} aria-current="page">
+            Modules
+          </Link>
+        </Breadcrumbs>
         <MaterialTable
           columns={[
             { title: "Module Number", field: "courseNumber" },
@@ -126,7 +137,7 @@ export default function CoursesPage() {
           data={courses}
         />
         {hasError ? (
-          <Typography variant="body1" color="error" className={classes.error}>
+          <Typography variant="body1" color="error" className={classes.root}>
             Couldn&apos;t fetch your courses.
           </Typography>
         ) : null}

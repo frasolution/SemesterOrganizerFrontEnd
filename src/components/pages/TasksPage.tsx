@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
-import { Typography, makeStyles } from "@material-ui/core";
+import { useParams, useHistory } from "react-router-dom";
+import { Typography, makeStyles, Breadcrumbs, Link } from "@material-ui/core";
 
 import HeaderBar from "../common/HeaderBar";
 import Column from "../common/Column";
@@ -13,8 +13,11 @@ import { ColumnType } from "../../types/types";
 import { FlexContainer } from "../styled-components";
 
 const useStyles = makeStyles(() => ({
-  error: {
+  root: {
     margin: "16px",
+  },
+  link: {
+    cursor: "pointer",
   },
 }));
 
@@ -22,6 +25,7 @@ export default function TasksPage() {
   const [columns, setColumns] = useState<ColumnType[]>([]);
   const [isError, setError] = useState(false);
   const { teamId, courseId } = useParams();
+  const history = useHistory();
   const classes = useStyles();
 
   useEffect(() => {
@@ -56,6 +60,21 @@ export default function TasksPage() {
         <CreateColumnDialog />
         <LogoutDialog />
       </HeaderBar>
+      <Breadcrumbs className={classes.root} aria-label="breadcrumb">
+        <Link color="inherit" className={classes.link} onClick={() => history.push("/teams")}>
+          Teams
+        </Link>
+        <Link
+          color="inherit"
+          className={classes.link}
+          onClick={() => history.push(`/teams/${teamId}/courses/`)}
+        >
+          Modules
+        </Link>
+        <Link color="textPrimary" className={classes.link} aria-current="page">
+          Tasks
+        </Link>
+      </Breadcrumbs>
       <FlexContainer>
         {columns
           .sort((a, b) => a.id - b.id)
@@ -81,7 +100,7 @@ export default function TasksPage() {
             );
           })}
         {isError ? (
-          <Typography variant="body1" color="error" className={classes.error}>
+          <Typography variant="body1" color="error" className={classes.root}>
             Couldn&apos;t fetch columns.
           </Typography>
         ) : null}
