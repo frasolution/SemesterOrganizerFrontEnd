@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import MoveIcon from "@material-ui/icons/SwapHoriz";
@@ -40,8 +40,19 @@ export default function MoveTaskDialog({
   const { teamId, courseId } = useParams();
   const classes = useStyles();
 
-  function openDialog() {
-    setOpen(true);
+  async function openDialog() {
+    try {
+      const response = await axios.get(`/api/teams/${teamId}/courses/${courseId}/columns`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + getToken(),
+        },
+      });
+      setColumns(response.data);
+      setOpen(true);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   function closeDialog() {
@@ -51,30 +62,6 @@ export default function MoveTaskDialog({
   function handleMoveChange(event: React.ChangeEvent<{ value: unknown }>) {
     setSelectedColumnId(event.target.value as number);
   }
-
-  useEffect(() => {
-    const source = axios.CancelToken.source();
-    const fetchCourses = async () => {
-      try {
-        const response = await axios.get(`/api/teams/${teamId}/courses/${courseId}/columns`, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + getToken(),
-          },
-          cancelToken: source.token,
-        });
-        setColumns(response.data);
-      } catch (error) {
-        if (axios.isCancel(error)) {
-          return;
-        } else {
-          console.error(error);
-        }
-      }
-    };
-    fetchCourses();
-    return () => source.cancel();
-  }, [open, teamId, courseId]);
 
   async function handleMove() {
     try {
