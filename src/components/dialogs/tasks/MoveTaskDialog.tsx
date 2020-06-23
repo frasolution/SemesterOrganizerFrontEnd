@@ -10,18 +10,14 @@ import {
   DialogContent,
   DialogActions,
   Button,
-  FormControl,
   InputLabel,
   Select,
   MenuItem,
 } from "@material-ui/core";
 import { getToken } from "../../../utils/jwt";
-import { ColumnType } from "../../../types/types";
+import { ColumnType, TaskType } from "../../../types/types";
 
-type MoveTaskDialogProps = {
-  id: number;
-  columnId: number;
-};
+type MoveTaskDialogProps = TaskType & { columnId: number };
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -29,7 +25,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MoveTaskDialog({ id, columnId }: MoveTaskDialogProps) {
+export default function MoveTaskDialog({
+  id,
+  columnId,
+  title,
+  description,
+  dueDate,
+  priority,
+  isCompleted,
+}: MoveTaskDialogProps) {
   const [open, setOpen] = useState(false);
   const [selectedColumnId, setSelectedColumnId] = useState<number>(columnId);
   const [columns, setColumns] = useState<ColumnType[]>([]);
@@ -69,14 +73,19 @@ export default function MoveTaskDialog({ id, columnId }: MoveTaskDialogProps) {
       }
     };
     fetchCourses();
-    document.title = "Your Modules | FRA UAS Semester Organizer";
-
     return () => source.cancel();
   }, [open, teamId, courseId]);
 
   async function handleMove() {
     try {
-      const body = { selectedColumnId };
+      const body = {
+        selectedColumnId,
+        title,
+        description,
+        dueDate,
+        priority,
+        isCompleted,
+      };
       const response = await axios.patch(
         `/api/teams/${teamId}/courses/${courseId}/columns/${columnId}/tasks/${id}/move`,
         body,

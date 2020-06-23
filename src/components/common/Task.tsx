@@ -84,7 +84,15 @@ export default function Task({
             isCompleted={isCompleted}
           />
           <div className={classes.crudActions}>
-            <MoveTaskDialog id={id} columnId={columnId} />
+            <MoveTaskDialog
+              id={id}
+              columnId={columnId}
+              title={title}
+              description={description}
+              dueDate={dueDate}
+              priority={priority}
+              isCompleted={isCompleted}
+            />
             <EditTaskDialog
               id={id}
               columnId={columnId}
