@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import CheckIcon from "@material-ui/icons/Check";
 import {
   Card,
@@ -7,6 +8,8 @@ import {
   makeStyles,
   CardHeader,
   IconButton,
+  CardContent,
+  Chip,
 } from "@material-ui/core";
 
 import ViewTaskDialog from "../dialogs/tasks/ViewTaskDialog";
@@ -14,6 +17,8 @@ import EditTaskDialog from "../dialogs/tasks/EditTaskDialog";
 import DeleteTaskDialog from "../dialogs/tasks/DeleteTaskDialog";
 import MoveTaskDialog from "../dialogs/tasks/MoveTaskDialog";
 import { CardContainer } from "../styled-components";
+import { getToken } from "../../utils/jwt";
+import { useParams } from "react-router-dom";
 
 type TaskProps = {
   columnId: number;
@@ -40,6 +45,17 @@ const useStyles = makeStyles((theme) => ({
   complete: {
     color: theme.palette.success.main,
   },
+  open: {
+    backgroundColor: theme.palette.error.main,
+    color: "white",
+  },
+  closed: {
+    backgroundColor: theme.palette.success.main,
+    color: "white",
+  },
+  card: {
+    border: "1px solid lightgrey",
+  },
 }));
 
 export default function Task({
@@ -51,29 +67,53 @@ export default function Task({
   priority,
   isCompleted,
 }: TaskProps) {
+  const { teamId, courseId } = useParams();
   const classes = useStyles();
+
+  async function handleComplete() {
+    try {
+      const response = await axios.patch(
+        `/api/teams/${teamId}/courses/${courseId}/columns/${columnId}/tasks/${id}/complete`,
+        null,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + getToken(),
+          },
+        }
+      );
+      if (response.status === 200) {
+        window.location.reload(false);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <CardContainer>
-      <Card elevation={8}>
+      <Card elevation={8} className={classes.card}>
         <CardHeader
           title={
-            <Typography variant="body1" color="textSecondary" component={"p"}>
-              {title}
-            </Typography>
+            isCompleted ? (
+              <Chip className={classes.closed} label="CLOSED" />
+            ) : (
+              <Chip className={classes.open} label="OPEN" />
+            )
           }
           action={
             isCompleted ? null : (
-              <IconButton
-                size="small"
-                className={classes.complete}
-                onClick={() => console.log("completed")}
-              >
+              <IconButton size="small" className={classes.complete} onClick={handleComplete}>
                 <CheckIcon fontSize="small" />
               </IconButton>
             )
           }
         />
+        <CardContent>
+          <Typography variant="body1" color="textSecondary" component={"p"}>
+            {title}
+          </Typography>
+        </CardContent>
         <CardActions disableSpacing className={classes.actions}>
           <ViewTaskDialog
             id={id}

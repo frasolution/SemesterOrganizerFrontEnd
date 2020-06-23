@@ -177,7 +177,11 @@ export default function CreateTaskDialog({ columnId }: CreateTaskDialogProps) {
             <Button onClick={closeDialog} color="secondary">
               Cancel
             </Button>
-            <Button onClick={handleSubmit} color="primary" disabled={!(title.length >= 1)}>
+            <Button
+              onClick={handleSubmit}
+              color="primary"
+              disabled={!(title.length >= 1 && title.length <= 30)}
+            >
               Create
             </Button>
           </DialogActions>
