@@ -65,6 +65,7 @@ export default function TasksPage() {
                 return (
                   <Task
                     key={idx}
+                    columnId={column.id}
                     id={id}
                     title={title}
                     description={description}

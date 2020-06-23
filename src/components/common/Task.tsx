@@ -15,6 +15,7 @@ import DeleteTaskDialog from "../dialogs/tasks/DeleteTaskDialog";
 import { CardContainer } from "../styled-components";
 
 type TaskProps = {
+  columnId: number;
   id: number;
   title: string;
   description: string;
@@ -37,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Task({
+  columnId,
   id,
   title,
   description,
@@ -84,7 +86,7 @@ export default function Task({
             priority={priority}
             isCompleted={isCompleted}
           />
-          <DeleteTaskDialog id={id} />
+          <DeleteTaskDialog id={id} columnId={columnId} />
         </CardActions>
       </Card>
     </CardContainer>
