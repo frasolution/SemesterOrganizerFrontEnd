@@ -8,6 +8,12 @@ export const FlexContainer = styled.div`
   display: flex;
 `;
 
+export const NotesContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+`;
+
 export const CardContainer = styled.div`
   padding: 16px;
 `;

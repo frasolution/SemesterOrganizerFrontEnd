@@ -6,6 +6,7 @@ import {
   EditCourseFormValues,
   CreateColumnFormValues,
   EditColumnFormValues,
+  CreateAndUpdateNoteFormValues,
 } from "../types/types";
 
 const passwordRegex = /((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
@@ -88,7 +89,7 @@ export const editCourseFormInitialValues: EditCourseFormValues = {
 export const createColumnFormValidationSchema = Yup.object({
   columnName: Yup.string()
     .required()
-    .min(2, "Needs more than 2 characters")
+    .min(1, "Needs more than 2 characters")
     .max(30, "Must be 30 characters or less"),
 });
 
@@ -106,4 +107,21 @@ export const editColumnFormValidationSchema = Yup.object({
 
 export const editColumnFormInitialValues: EditColumnFormValues = {
   columnName: "",
+};
+
+// CREATE_UPDATE NOTES FORM
+export const createAndUpdateNoteFormValidationSchema = Yup.object({
+  noteTitle: Yup.string()
+    .required()
+    .min(1, "Needs more than 1 character")
+    .max(32, "Must be 32 characters or less"),
+  noteDescription: Yup.string()
+    .required()
+    .min(1, "Needs more than 1 character")
+    .max(25000, "Must be 2500 characters or less"),
+});
+
+export const createAndUpdateNoteFormInitialValues: CreateAndUpdateNoteFormValues = {
+  noteTitle: "",
+  noteDescription: "",
 };

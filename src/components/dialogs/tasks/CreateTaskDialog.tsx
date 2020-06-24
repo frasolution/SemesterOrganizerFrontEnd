@@ -20,7 +20,7 @@ import { getToken } from "../../../utils/jwt";
 import { priorityLabels } from "../../../utils/data";
 
 type CreateTaskDialogProps = {
-  columnId: number;
+  columnId: string;
 };
 
 const useStyles = makeStyles((theme) => ({

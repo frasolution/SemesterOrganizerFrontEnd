@@ -17,7 +17,7 @@ import {
 import { getToken } from "../../../utils/jwt";
 import { ColumnType, TaskType } from "../../../types/types";
 
-type MoveTaskDialogProps = TaskType & { columnId: number };
+type MoveTaskDialogProps = TaskType & { columnId: string };
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -35,7 +35,7 @@ export default function MoveTaskDialog({
   isCompleted,
 }: MoveTaskDialogProps) {
   const [open, setOpen] = useState(false);
-  const [selectedColumnId, setSelectedColumnId] = useState<number>(columnId);
+  const [selectedColumnId, setSelectedColumnId] = useState<string>(columnId);
   const [columns, setColumns] = useState<ColumnType[]>([]);
   const { teamId, courseId } = useParams();
   const classes = useStyles();
@@ -60,7 +60,7 @@ export default function MoveTaskDialog({
   }
 
   function handleMoveChange(event: React.ChangeEvent<{ value: unknown }>) {
-    setSelectedColumnId(event.target.value as number);
+    setSelectedColumnId(event.target.value as string);
   }
 
   async function handleMove() {

@@ -22,8 +22,8 @@ import { getToken } from "../../utils/jwt";
 import { useParams } from "react-router-dom";
 
 type TaskProps = {
-  columnId: number;
-  id: number;
+  columnId: string;
+  id: string;
   title: string;
   description: string;
   dueDate: Date | null;

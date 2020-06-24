@@ -22,7 +22,7 @@ import {
 import { getToken } from "../../../utils/jwt";
 
 type EditColumnButtonProps = {
-  columnId: number;
+  columnId: string;
   columnTitle: string;
 };
 

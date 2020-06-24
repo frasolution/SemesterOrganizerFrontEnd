@@ -30,7 +30,7 @@ export default function TasksPage() {
 
   useEffect(() => {
     const source = axios.CancelToken.source();
-    const fetchCourses = async () => {
+    const fetchTasks = async () => {
       try {
         const response = await axios.get(`/api/teams/${teamId}/courses/${courseId}/columns`, {
           headers: {
@@ -48,8 +48,8 @@ export default function TasksPage() {
         }
       }
     };
-    fetchCourses();
-    document.title = "Your Modules | FRA UAS Semester Organizer";
+    fetchTasks();
+    document.title = "Your Tasks | FRA UAS Semester Organizer";
 
     return () => source.cancel();
   }, [teamId, courseId]);

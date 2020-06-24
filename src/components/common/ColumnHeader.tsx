@@ -6,7 +6,7 @@ import EditColumnDialog from "../dialogs/columns/EditColumnDialog";
 import DeleteColumnDialog from "../dialogs/columns/DeleteColumnDialog";
 
 type ColumnHeaderProps = {
-  id: number;
+  id: string;
   title: string;
 };
 

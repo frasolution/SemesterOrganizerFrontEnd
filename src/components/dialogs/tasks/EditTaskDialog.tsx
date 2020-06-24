@@ -21,7 +21,7 @@ import { TaskType } from "../../../types/types";
 import { getToken } from "../../../utils/jwt";
 import { priorityLabels } from "../../../utils/data";
 
-type EditTaskDialogProps = TaskType & { columnId: number };
+type EditTaskDialogProps = TaskType & { columnId: string };
 
 const useStyles = makeStyles((theme) => ({
   button: {

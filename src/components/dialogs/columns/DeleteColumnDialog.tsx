@@ -14,7 +14,7 @@ import {
 import { getToken } from "../../../utils/jwt";
 
 type DeleteColumnButtonProps = {
-  columnId: number;
+  columnId: string;
 };
 
 export default function DeleteColumnButton({ columnId }: DeleteColumnButtonProps) {

@@ -6,7 +6,7 @@ import { ColumnContainerStyles } from "../styled-components";
 import ColumnHeader from "./ColumnHeader";
 
 type ColumnProps = {
-  id: number;
+  id: string;
   title: string;
 };
 

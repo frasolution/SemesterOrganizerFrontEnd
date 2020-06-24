@@ -31,8 +31,19 @@ export type EditColumnFormValues = {
   columnName: string;
 };
 
+export type CreateAndUpdateNoteFormValues = {
+  noteTitle: string;
+  noteDescription: string;
+};
+
+export type NoteType = {
+  id: string;
+  title: string;
+  description: string;
+};
+
 export type Team = {
-  id: number;
+  id: string;
   name: string;
 };
 
@@ -44,14 +55,14 @@ export type Course = {
 };
 
 export type ColumnType = {
-  id: number;
+  id: string;
   title: string;
   createdAt: Date;
   tasks: TaskType[];
 };
 
 export type TaskType = {
-  id: number;
+  id: string;
   title: string;
   description: string;
   dueDate: Date | null;
@@ -61,4 +72,4 @@ export type TaskType = {
 
 export type TeamsRowData = Team & RowData;
 
-export type CoursesRowData = Course & RowData & { id: number };
+export type CoursesRowData = Course & RowData & { id: string };

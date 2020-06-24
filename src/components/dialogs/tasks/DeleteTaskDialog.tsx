@@ -16,8 +16,8 @@ import {
 import { getToken } from "../../../utils/jwt";
 
 type DeleteTaskDialogProps = {
-  id: number;
-  columnId: number;
+  id: string;
+  columnId: string;
 };
 
 const useStyles = makeStyles((theme) => ({
