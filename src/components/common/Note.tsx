@@ -1,7 +1,7 @@
 import React from "react";
 import EditNoteDialog from "../dialogs/notes/EditNoteDialog";
 import DeleteNoteDialog from "../dialogs/notes/DeleteNoteDialog";
-import { CardContainer } from "../styled-components";
+import { CardContainer, CardText } from "../styled-components";
 import {
   Card,
   CardHeader,
@@ -22,6 +22,9 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     justifyContent: "flex-end",
   },
+  noteContent: {
+    whiteSpace: "pre-line",
+  },
 }));
 
 export default function Note({ noteId, noteTitle, noteDescription }: NoteProps) {
@@ -38,8 +41,13 @@ export default function Note({ noteId, noteTitle, noteDescription }: NoteProps) 
           }
         />
         <CardContent>
-          <Typography variant="body1" color="textSecondary" component={"p"}>
-            {noteDescription}
+          <Typography
+            className={classes.noteContent}
+            variant="body1"
+            color="textSecondary"
+            component={"span"}
+          >
+            <CardText>{noteDescription}</CardText>
           </Typography>
         </CardContent>
         <CardActions disableSpacing className={classes.actions}>

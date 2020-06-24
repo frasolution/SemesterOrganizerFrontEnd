@@ -18,6 +18,21 @@ export const CardContainer = styled.div`
   padding: 16px;
 `;
 
+export const CardText = styled.p`
+  /* These are technically the same, but use both */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  -ms-word-break: break-all;
+  word-break: break-word;
+
+  /* Adds a hyphen where the word breaks, if supported */
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+`;
+
 export const ColumnContainerStyles = css`
   display: flex;
   flex-direction: column;
