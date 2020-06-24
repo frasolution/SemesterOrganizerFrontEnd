@@ -6,6 +6,7 @@ import AddIcon from "@material-ui/icons/Add";
 import EnterIcon from "@material-ui/icons/SubdirectoryArrowRight";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
+import NoteIcon from "@material-ui/icons/Note";
 import { makeStyles, Typography, Breadcrumbs, Link } from "@material-ui/core";
 
 import HeaderBar from "../common/HeaderBar";
@@ -110,6 +111,13 @@ export default function CoursesPage() {
               tooltip: "Visit Tasks",
               onClick: (_event, rowData: any) => {
                 history.push(`/teams/${teamId}/courses/${rowData.id}/tasks`);
+              },
+            },
+            {
+              icon: () => <NoteIcon />,
+              tooltip: "Visit Notes",
+              onClick: (_event, rowData: any) => {
+                history.push(`/teams/${teamId}/courses/${rowData.id}/notes`);
               },
             },
             {
