@@ -6,7 +6,7 @@ import { useHistory, useParams } from "react-router-dom";
 import Note from "../common/Note";
 import HeaderBar from "../common/HeaderBar";
 import LogoutDialog from "../dialogs/LogoutDialog";
-import CreateNotesDialog from "../dialogs/notes/CreateNotesDialog";
+import CreateNoteDialog from "../dialogs/notes/CreateNoteDialog";
 import { NotesContainer } from "../styled-components";
 import { getToken } from "../../utils/jwt";
 import { NoteType } from "../../types/types";
@@ -56,7 +56,7 @@ export default function NotesPage() {
   return (
     <Fragment>
       <HeaderBar title="Your Notes">
-        <CreateNotesDialog />
+        <CreateNoteDialog />
         <LogoutDialog />
       </HeaderBar>
       <Breadcrumbs className={classes.root} aria-label="breadcrumb">
