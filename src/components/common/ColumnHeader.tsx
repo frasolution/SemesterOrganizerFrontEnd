@@ -12,7 +12,7 @@ type ColumnHeaderProps = {
 
 const useStyles = makeStyles((theme) => ({
   header: {
-    backgroundColor: theme.palette.secondary.dark,
+    backgroundColor: theme.palette.info.dark,
     color: theme.palette.secondary.contrastText,
   },
 }));

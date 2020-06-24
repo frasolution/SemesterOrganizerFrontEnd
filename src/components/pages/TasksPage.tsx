@@ -77,7 +77,7 @@ export default function TasksPage() {
       </Breadcrumbs>
       <FlexContainer>
         {columns
-          .sort((a, b) => a.id - b.id)
+          .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
           .map((column, index) => {
             return (
               <Column key={index} id={column.id} title={column.title}>

@@ -46,6 +46,7 @@ export type Course = {
 export type ColumnType = {
   id: number;
   title: string;
+  createdAt: Date;
   tasks: TaskType[];
 };
 
