@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import * as Typewriter from "typewriter-effect";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Grid, Typography } from "@material-ui/core";
 
@@ -56,13 +57,14 @@ export default function HomePage() {
         alignItems="center"
       >
         <Grid item xs={12}>
-          <Typography variant="h1" className={classes.greeting}>
-            Welcome
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h5" className={classes.subtitle}>
-            Organize your CS modules of the Frankfurt University of Applied Sciences
+          <Typography id="greeting" variant="h1" className={classes.greeting}>
+            <Typewriter
+              options={{
+                strings: ["Welcome.", "Willkommen.", "Bienvenue."],
+                autoStart: true,
+                loop: true,
+              }}
+            />
           </Typography>
         </Grid>
         <Grid item xs={12}>

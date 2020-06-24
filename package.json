@@ -19,6 +19,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "styled-components": "^5.1.0",
+    "typewriter-effect": "^2.13.1",
     "yup": "^0.28.5"
   },
   "devDependencies": {
