@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+// eslint-disable-next-line import/no-unresolved
 import * as Typewriter from "typewriter-effect";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Grid, Typography } from "@material-ui/core";
