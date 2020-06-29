@@ -27,6 +27,7 @@ export default function TasksPage() {
   const { teamId, courseId } = useParams();
   const history = useHistory();
   const classes = useStyles();
+  const { courseName } = history.location.state as any;
 
   useEffect(() => {
     const source = axios.CancelToken.source();
@@ -49,14 +50,14 @@ export default function TasksPage() {
       }
     };
     fetchTasks();
-    document.title = "Your Tasks | FRA UAS Semester Organizer";
+    document.title = `Your Tasks for ${courseName} | FRA UAS Semester Organizer`;
 
     return () => source.cancel();
-  }, [teamId, courseId]);
+  }, [teamId, courseId, courseName]);
 
   return (
     <Fragment>
-      <HeaderBar title="Your Tasks">
+      <HeaderBar title={`Your Tasks for ${courseName}`}>
         <CreateColumnDialog />
         <LogoutDialog />
       </HeaderBar>

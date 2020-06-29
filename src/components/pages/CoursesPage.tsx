@@ -110,14 +110,19 @@ export default function CoursesPage() {
               icon: () => <EnterIcon />,
               tooltip: "Visit Tasks",
               onClick: (_event, rowData: any) => {
-                history.push(`/teams/${teamId}/courses/${rowData.id}/tasks`);
+                console.log(rowData);
+                history.push(`/teams/${teamId}/courses/${rowData.id}/tasks`, {
+                  courseName: rowData.courseName,
+                });
               },
             },
             {
               icon: () => <NoteIcon />,
               tooltip: "Visit Notes",
               onClick: (_event, rowData: any) => {
-                history.push(`/teams/${teamId}/courses/${rowData.id}/notes`);
+                history.push(`/teams/${teamId}/courses/${rowData.id}/notes`, {
+                  courseName: rowData.courseName,
+                });
               },
             },
             {

@@ -26,6 +26,7 @@ export default function NotesPage() {
   const { teamId, courseId } = useParams();
   const history = useHistory();
   const classes = useStyles();
+  const { courseName } = history.location.state as any;
 
   useEffect(() => {
     const source = axios.CancelToken.source();
@@ -48,14 +49,14 @@ export default function NotesPage() {
       }
     };
     fetchNotes();
-    document.title = "Your Notes | FRA UAS Semester Organizer";
+    document.title = `Your Notes for ${courseName} | FRA UAS Semester Organizer`;
 
     return () => source.cancel();
-  }, [teamId, courseId]);
+  }, [teamId, courseId, courseName]);
 
   return (
     <Fragment>
-      <HeaderBar title="Your Notes">
+      <HeaderBar title={`Your Notes for ${courseName}`}>
         <CreateNoteDialog />
         <LogoutDialog />
       </HeaderBar>
