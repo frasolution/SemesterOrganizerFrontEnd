@@ -20,6 +20,7 @@ export const CardContainer = styled.div`
 
 export const NoteContainer = styled.div`
   padding: 16px;
+  min-width: 16em;
   max-width: 32em;
 `;
 

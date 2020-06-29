@@ -110,7 +110,6 @@ export default function CoursesPage() {
               icon: () => <EnterIcon />,
               tooltip: "Visit Tasks",
               onClick: (_event, rowData: any) => {
-                console.log(rowData);
                 history.push(`/teams/${teamId}/courses/${rowData.id}/tasks`, {
                   courseName: rowData.courseName,
                 });

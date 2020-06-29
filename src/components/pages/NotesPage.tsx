@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import axios from "axios";
-import { Breadcrumbs, Link, makeStyles, Typography } from "@material-ui/core";
+import { Breadcrumbs, Link, makeStyles, Typography, CircularProgress } from "@material-ui/core";
 import { useHistory, useParams } from "react-router-dom";
 
 import Note from "../common/Note";
@@ -22,6 +22,7 @@ const useStyles = makeStyles(() => ({
 
 export default function NotesPage() {
   const [notes, setNotes] = useState<NoteType[]>([]);
+  const [isLoading, setLoading] = useState(false);
   const [isError, setError] = useState(false);
   const { teamId, courseId } = useParams();
   const history = useHistory();
@@ -32,6 +33,7 @@ export default function NotesPage() {
     const source = axios.CancelToken.source();
     const fetchNotes = async () => {
       try {
+        setLoading(true);
         const response = await axios.get(`/api/teams/${teamId}/courses/${courseId}/notes`, {
           headers: {
             "Content-Type": "application/json",
@@ -39,6 +41,7 @@ export default function NotesPage() {
           },
           cancelToken: source.token,
         });
+        setLoading(false);
         setNotes(response.data);
       } catch (error) {
         if (axios.isCancel(error)) {
@@ -80,6 +83,12 @@ export default function NotesPage() {
           const { id, title, description } = note;
           return <Note key={index} noteId={id} noteTitle={title} noteDescription={description} />;
         })}
+        {isLoading ? <CircularProgress /> : null}
+        {notes.length === 0 && !isLoading ? (
+          <Typography variant="body1" color="textPrimary" className={classes.root}>
+            No records to fetch. Create notes to start collecting your thoughts!
+          </Typography>
+        ) : null}
         {isError ? (
           <Typography variant="body1" color="error" className={classes.root}>
             Couldn&apos;t fetch notes.

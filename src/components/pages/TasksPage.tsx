@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useHistory } from "react-router-dom";
-import { Typography, makeStyles, Breadcrumbs, Link } from "@material-ui/core";
+import { Typography, makeStyles, Breadcrumbs, Link, CircularProgress } from "@material-ui/core";
 
 import HeaderBar from "../common/HeaderBar";
 import Column from "../common/Column";
@@ -24,6 +24,7 @@ const useStyles = makeStyles(() => ({
 export default function TasksPage() {
   const [columns, setColumns] = useState<ColumnType[]>([]);
   const [isError, setError] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const { teamId, courseId } = useParams();
   const history = useHistory();
   const classes = useStyles();
@@ -33,6 +34,7 @@ export default function TasksPage() {
     const source = axios.CancelToken.source();
     const fetchTasks = async () => {
       try {
+        setLoading(true);
         const response = await axios.get(`/api/teams/${teamId}/courses/${courseId}/columns`, {
           headers: {
             "Content-Type": "application/json",
@@ -40,6 +42,7 @@ export default function TasksPage() {
           },
           cancelToken: source.token,
         });
+        setLoading(false);
         setColumns(response.data);
       } catch (error) {
         if (axios.isCancel(error)) {
@@ -100,6 +103,12 @@ export default function TasksPage() {
               </Column>
             );
           })}
+        {isLoading ? <CircularProgress /> : null}
+        {columns.length === 0 && !isLoading ? (
+          <Typography variant="body1" color="textPrimary" className={classes.root}>
+            No records to fetch. Create a column to start organizing your tasks!
+          </Typography>
+        ) : null}
         {isError ? (
           <Typography variant="body1" color="error" className={classes.root}>
             Couldn&apos;t fetch columns.
