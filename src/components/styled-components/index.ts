@@ -18,6 +18,11 @@ export const CardContainer = styled.div`
   padding: 16px;
 `;
 
+export const NoteContainer = styled.div`
+  padding: 16px;
+  max-width: 32em;
+`;
+
 export const CardText = styled.p`
   /* These are technically the same, but use both */
   overflow-wrap: break-word;

@@ -1,7 +1,7 @@
 import React from "react";
 import EditNoteDialog from "../dialogs/notes/EditNoteDialog";
 import DeleteNoteDialog from "../dialogs/notes/DeleteNoteDialog";
-import { CardContainer, CardText } from "../styled-components";
+import { CardText, NoteContainer } from "../styled-components";
 import {
   Card,
   CardHeader,
@@ -31,7 +31,7 @@ export default function Note({ noteId, noteTitle, noteDescription }: NoteProps) 
   const classes = useStyles();
 
   return (
-    <CardContainer>
+    <NoteContainer>
       <Card elevation={8}>
         <CardHeader
           title={
@@ -55,6 +55,6 @@ export default function Note({ noteId, noteTitle, noteDescription }: NoteProps) 
           <DeleteNoteDialog noteId={noteId} />
         </CardActions>
       </Card>
-    </CardContainer>
+    </NoteContainer>
   );
 }
