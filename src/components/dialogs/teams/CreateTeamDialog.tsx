@@ -26,6 +26,7 @@ export default function CreateTeamDialog({ open, setOpen }: CreateTeamDialogProp
   const [usernames, setUsernames] = useState([] as string[]);
   const [isSuccessOpen, setSuccessOpen] = useState(false);
   const [isErrorOpen, setErrorOpen] = useState(false);
+  const [errorText, setErrorText] = useState("");
 
   const teamNameInput = validateInput(teamName.length, 0, 30);
   const usernamesInput = validateInput(usernames.length, 0, 10);
@@ -39,20 +40,27 @@ export default function CreateTeamDialog({ open, setOpen }: CreateTeamDialogProp
           Authorization: "Bearer " + getToken(),
         },
       });
-      closeDialog();
       if (response.status === 201) {
+        closeDialog();
         openSuccessSnackbar();
         window.location.reload(false);
       }
     } catch (error) {
-      openErrorSnackbar();
-      console.log(error);
+      if (error.response.status === 409) {
+        setErrorText(error.response.data.message);
+        openErrorSnackbar();
+      } else {
+        setErrorText("There is an internal server error. Come back later!");
+        openErrorSnackbar();
+      }
     }
   }
 
   function resetState() {
     setTeamName("");
     setUsernames([]);
+    setErrorText("");
+    setErrorOpen(false);
   }
 
   function closeDialog() {
@@ -168,7 +176,7 @@ export default function CreateTeamDialog({ open, setOpen }: CreateTeamDialogProp
       </Snackbar>
       <Snackbar open={isErrorOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
         <MuiAlert severity="error" elevation={6} variant="filled" onClose={handleSnackbarClose}>
-          Could not find certain usernames! Make sure that they exist.
+          {errorText}
         </MuiAlert>
       </Snackbar>
     </React.Fragment>
