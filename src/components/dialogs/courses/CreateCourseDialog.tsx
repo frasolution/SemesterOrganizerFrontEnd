@@ -14,6 +14,7 @@ import {
   Chip,
   MenuItem,
   makeStyles,
+  Typography,
 } from "@material-ui/core";
 
 import { allCsCourseNames } from "../../../utils/data";
@@ -39,11 +40,15 @@ const useStyles = makeStyles(() => ({
 
 export default function CreateCourseDialog({ open, setOpen }: CreateCourseDialogProps) {
   const [courseNames, setCourseNames] = useState<string[]>([]);
+  const [isError, setError] = useState(false);
+  const [errorText, setErrorText] = useState("");
   const { teamId } = useParams();
   const classes = useStyles();
 
   function resetState() {
     setCourseNames([]);
+    setError(false);
+    setErrorText("");
   }
 
   function closeDialog() {
@@ -64,12 +69,17 @@ export default function CreateCourseDialog({ open, setOpen }: CreateCourseDialog
           Authorization: "Bearer " + getToken(),
         },
       });
-      closeDialog();
       if (response.status === 201) {
+        closeDialog();
         window.location.reload(false);
       }
     } catch (error) {
-      console.log(error);
+      setError(true);
+      if (error.response.status === 409) {
+        setErrorText(error.response.data.message);
+      } else {
+        setErrorText("There is an internal server error. Come back later!");
+      }
     }
   }
 
@@ -107,6 +117,11 @@ export default function CreateCourseDialog({ open, setOpen }: CreateCourseDialog
                 </MenuItem>
               ))}
             </Select>
+            {isError ? (
+              <Typography variant="subtitle2" color="error">
+                {errorText}
+              </Typography>
+            ) : null}
           </FormControl>
         </DialogContent>
         <DialogActions>
