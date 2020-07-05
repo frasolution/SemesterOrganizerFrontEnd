@@ -13,6 +13,7 @@ import {
   Fab,
   makeStyles,
   Theme,
+  Typography,
 } from "@material-ui/core";
 
 import { SignUpFormValues } from "../../types/types";
@@ -35,6 +36,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 export default function SignUpDialog() {
   const [isOpen, setOpen] = useState(false);
   const [isSuccessOpen, setSuccessOpen] = useState(false);
+  const [isError, setError] = useState(false);
   const classes = useStyles();
 
   function openDialog() {
@@ -59,12 +61,17 @@ export default function SignUpDialog() {
   async function submit(values: SignUpFormValues) {
     try {
       const response = await httpPost("/api/auth/signup", values);
-      closeDialog();
       if (response.status === 201) {
+        closeDialog();
+        setError(false);
         openSuccessSnackbar();
       }
     } catch (error) {
-      alert("You can't sign up right now.");
+      if (error.response.status === 409) {
+        setError(true);
+      } else {
+        alert("There is an internal server error. Come back later!");
+      }
     }
   }
 
@@ -182,6 +189,11 @@ export default function SignUpDialog() {
                       autoComplete="off"
                       fullWidth
                     />
+                    {isError ? (
+                      <Typography variant="subtitle2" color="error">
+                        This username already exists! Please select a new one.
+                      </Typography>
+                    ) : null}
                     <DialogActions>
                       <Button
                         onClick={() => {
